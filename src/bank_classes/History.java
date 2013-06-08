@@ -18,7 +18,7 @@ public class History {
 	
 	}
 	
-	public void store_transaction(Object Transaction t) {
+	public void store_transaction(Transaction t) {
 	
 	}
 	

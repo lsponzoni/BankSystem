@@ -11,4 +11,12 @@ package bank_classes;
 //
 
 public class Withdrawal extends Transaction {
+	
+	public Withdrawal(String location_access_branch_code, Date date, Number value, String this_acc_code){
+		super(location_access_branch_code, date, value, this_acc_code)
+	}
+	    
+	public Number get_value() {
+        return -value;
+	}
 }
