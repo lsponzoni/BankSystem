@@ -46,7 +46,7 @@ public class Branch {
 		return search_result;
 	}
 
-	private User add_user(Collection<User> collection, User user) throws DuplicateException{
+	private void add_user(Collection<User> collection, User user) throws DuplicateException{
 		if(find(collection,
 				user.getUsername())){
 			throw new DuplicateException(user.toString());
@@ -93,12 +93,12 @@ public class Branch {
 		return find(clerks,clerk);
 	}
 
-	public void add_client(Client client) {
-		
+	public void add_client(Client client) throws DuplicateException {
+		add_user(accounts,client);
 	}
 
-	public void add_clerk(Clerk client) {
-
+	public void add_clerk(Clerk clerk) throws DuplicateException {
+		add_user(clerks,clerk);
 	}
 
 }
