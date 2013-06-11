@@ -10,7 +10,7 @@ Para criar o projeto caso não existente (ou sem egit):
  (p.ex: ../Banksystem ) 
  new java project ->  Name: Banksystem 
  
- Ele deve configurar automático
+ Ele deve configurar automático, se houver alguma dependencia faltando um quickfix deve ser o suficiente.
 
 Nos próximos casos : 
  é só utilizar 
