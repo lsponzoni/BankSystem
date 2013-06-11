@@ -12,14 +12,17 @@ package bank_classes;
 
 public class BranchUI extends UI {
 	public String add_new_account_to_system(Client client, int initial_balance) {
+		return null;
 
 	}
 
 	public String enable_management_functions() {
+		return null;
 
 	}
 
 	public String login(String username, String password) {
+		return null;
 
 	}
 }

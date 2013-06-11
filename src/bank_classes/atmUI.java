@@ -12,14 +12,17 @@ package bank_classes;
 
 public class atmUI extends UI {
 	public String deposit(Number ammount, String cashParcelId) {
+		return null;
 
 	}
 
 	public String withdraw(Number ammout) {
+		return null;
 
 	}
 
 	public String transfer(Number ammount, Client to) {
+		return null;
 
 	}
 }

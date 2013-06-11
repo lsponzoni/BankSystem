@@ -15,19 +15,19 @@ package bank_classes;
 
 public class Account {
 	private String account_code;
-	private String branch_code
-	private Number initial_balance;
+	private String branch_code;
+	private Money initial_balance;
 	private History history;
 	
-	public Account(String account_code, String branch_code, Number initial_balance){
+	public Account(String account_code, String branch_code, Money initial_balance){
 	    this.account_code = account_code;
 	    this.branch_code = branch_code;
 	    this.initial_balance = initial_balance;
 	}
 		
-	public Number get_balance() {
-		private Number liquid_balance;
-		liquid_balance=inital_balance + history.sum_transaction_values();	
+	public Money get_balance() {
+		Money liquid_balance;
+		liquid_balance = initial_balance.add(history.sum_transaction_values());	
 		return liquid_balance;
 	}
 	

@@ -1,6 +1,8 @@
 package bank_classes;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 //
 //
@@ -16,17 +18,20 @@ import java.sql.Date;
 public class Transaction {
 	private String location_access_branch_code;
 	private Date date;
-	private Number value;
+	private Money value;
 	private String this_acc_code;
 
-	public Transaction(String location_access_branch_code, Date date, Number value, String this_acc_code){
-	    
+	public Transaction(String location_access_branch_code, Date date, Money value, String this_acc_code){
+		this.location_access_branch_code = location_access_branch_code;
+		this.date = date;
+		this.value = value;
+		this.this_acc_code = this_acc_code;
 	}
 	
 	
 	
 	
-	public Number get_value() {
+	public Money get_value() {
           return value;
 	}
 

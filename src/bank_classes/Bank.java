@@ -14,18 +14,23 @@ public class Bank {
 	private int account_number;
 
 	public Branch get_branch(String branch_code) {
+		return null;
 
 	}
 
 	public Client get_client(String client_username, String branch_id) {
+		return null;
 
 	}
 
 	public Clerk get_clerk(String clerk_username, String branch_id) {
+		return null;
+		
 
 	}
 
 	public String next_account_number() {
+		return null;
 
 	}
 }
