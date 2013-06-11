@@ -19,6 +19,9 @@ Nos próximos casos :
  git fetch
  git merge 
 
+Ver Arquivos que tu esqueceu de dar track
+ git status
+
 Novos arquivos 
  git add "path da raiz do diretório que fez o clone até o arquivo"
 

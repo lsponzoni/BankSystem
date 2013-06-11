@@ -72,7 +72,6 @@ public class Branch {
 
 	public String get_name() {
 		return name;
-
 	}
 
 	public String get_code() {

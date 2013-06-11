@@ -1,0 +1,14 @@
+Pablo:
+History 
+Account x  (nao testado)
+Withdraw x (nao testado)
+Transfer x (nao testado)
+
+Leonardo :
+User x (Testado)
+Branch
+Client
+Clerk 
+Extras fora da especificação em uml:
+       Money
+       MoneyPair
