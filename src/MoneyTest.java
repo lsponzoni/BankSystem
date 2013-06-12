@@ -9,17 +9,35 @@ public class MoneyTest {
 	@Test
 	public void create_money_from_int_pass() {
 		money = new Money(112);
-		assertEquals(money.toString(),"1,12");
+		assertEquals("1,12",money.toString());
 	}
 	@Test
 	public void create_money_from_double(){
 		money = new Money(1.12);
-		assertEquals(money.toString(),"1,12");
+		assertEquals("1,12",money.toString());
 	}
 	@Test
 	public void create_money_from_String(){
 		money = new Money("1,12");
-		assertEquals(money.toString(),"1,12");
+		assertEquals("1,12",money.toString());
+	}
+
+	@Test
+	public void create_money_from_String_no_cents(){
+		money = new Money("1");
+		assertEquals("1,00",money.toString());
+	}
+
+	@Test
+	public void create_cents_from_String_with_trailing_digits(){
+		money = new Money("1,1298");
+		assertEquals("1,12",money.toString());
+	}
+
+	@Test (expected = StringIndexOutOfBoundsException.class)
+	public void create_cents_from_String_with_insufficient_digits(){
+		money = new Money("1,1");
+		
 	}
 
 	@Test
