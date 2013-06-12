@@ -5,10 +5,14 @@ Withdraw x (nao testado)
 Transfer x (nao testado)
 
 Leonardo :
-User x (Testado)
+User x (Testado): 53% de cobertura(Sem testes usando o ToString(); )
 Branch
 Client
 Clerk 
+BranchUI 
 Extras fora da especificação em uml:
-       Money
-       MoneyPair
+       Money x Testado 100% de cobertura
+       MoneyPair x Testado pela classe que testa o acima
+       		 (podia ser uma innerclass, mas nao vai)
+		 Testado 90.1% de cobertura (construtor para unit e cents
+		 	       	  	     nao testado)

@@ -17,8 +17,8 @@ import java.util.Date;
 
 public class UI {
 	private boolean logged_in;
-	public User current_user;
-	public Branch access_branch;
+	protected User current_user;
+	protected Branch access_branch;
 	public String login(String username, String branch, String password) {
 		return "";
 	}

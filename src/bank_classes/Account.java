@@ -32,11 +32,11 @@ public class Account {
 	}
 	
 	public History get_history() {
-	       return history;
+	    return history;
 	}
 	
 	public void add_to_history(Transaction t) {
-	history.store_transaction(t);
+		history.store_transaction(t);
 	}
 	
 	public String get_branch_code() {

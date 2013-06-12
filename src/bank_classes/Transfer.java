@@ -18,7 +18,11 @@ public class Transfer extends Transaction {
 		super(location_access_branch_code, date, value, this_acc_code);
 		// TODO Auto-generated constructor stub
 	}
+	public void Transfer(Account from, Account to, int Value) {
 
+	}
+
+	
 	public String to_accound_code;
 	public String to_branch_code;
 	public String from_account_code;
@@ -36,7 +40,4 @@ public class Transfer extends Transaction {
 		return super.get_value();
 	}
 
-	public void Transfer(Account from, Account to, int Value) {
-
-	}
 }

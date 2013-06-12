@@ -11,7 +11,7 @@ package bank_classes;
 //
 
 public class Bank {
-	private int account_number;
+	private int last_user_number;
 
 	public Branch get_branch(String branch_code) {
 		return null;

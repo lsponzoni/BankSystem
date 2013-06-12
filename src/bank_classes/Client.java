@@ -13,15 +13,23 @@ import java.util.Calendar;
 //
 
 public class Client extends User {
-	public Client(String name, String surname, Calendar birthday,
-			String username, String password) {
-		super(name, surname, birthday, username, password);
-		// TODO Auto-generated constructor stub
-	}
-
 	private String cpf;
 
-	public Account get_account() {
-		return null;
+	public Client(String name, String surname, Calendar birthday,
+			String username, String password, String cpf) {
+		super(name, surname, birthday, username, password);
+		// TODO Auto-generated constructor stub
+		this.cpf = cpf;
+	}
+
+
+	public String get_account_id() {
+		return super.getUsername();
+	}
+	public String get_cpf(){
+		return cpf;
+	}
+	public String toString(){
+		return super.toString() + "CPF:" + cpf;
 	}
 }

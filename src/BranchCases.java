@@ -29,7 +29,7 @@ public class BranchCases {
 		String inexistent_user = "John Constantine";
 		b.get_client(inexistent_user);
 	}
-
+	@Test
 	public void inexistent_client_doesnt_exist() {
 		String inexistent_user = "John Constantine";
 		boolean account_status = b.has_account(inexistent_user);

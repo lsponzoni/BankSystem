@@ -1,28 +1,35 @@
 package bank_classes;
 
 public class Money {
-	private int one_hundred_money;
+	private int one_hundred_ammount;
 	
 	public Money(int x){
-		one_hundred_money = x;  
+		one_hundred_ammount = x;  
 	}
 
 	public Money(double x){
-		one_hundred_money =(int) x * 100;  
+		one_hundred_ammount =(int) (x * 100);  
 	}
-	
+
+	public Money(String initial_balance) {
+		MoneyPair parsed = new MoneyPair(initial_balance);
+		int hundreds = (parsed.get_dollars() * 100);
+		int cents = parsed.get_cents();
+		one_hundred_ammount = hundreds + cents; 
+	}
+
 	public String toString(){
-		MoneyPair money= new MoneyPair(one_hundred_money);
-		return money.get_dollars() + "," + money.get_cents();
+		MoneyPair money= new MoneyPair(one_hundred_ammount);
+		return money.toString();
 	}
 
 	public Money add(Money m) {
-		// TODO Auto-generated method stub
-		return null;
+		int sum = this.one_hundred_ammount + m.one_hundred_ammount;
+		return new Money(sum);
 	}
 	
 	public Money minus(){
-		return new Money(-one_hundred_money);
+		return new Money(-one_hundred_ammount);
 	}
 }
 

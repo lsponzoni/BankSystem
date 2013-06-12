@@ -11,8 +11,17 @@ package bank_classes;
 //
 
 public class BranchUI extends UI {
-	public String add_new_account_to_system(Client client, int initial_balance) {
-		return null;
+	public String add_new_account_to_system(Client client, String initial_balance) {
+		// ignore how hard it is to create the client out there
+		String client_id, branch_id;
+		Money balance; 
+		Account new_acc;
+		client_id = client.get_account_id();
+		branch_id = access_branch.get_code();
+		balance = new Money(initial_balance);
+		
+		new_acc = new Account(client_id, branch_id, balance);
+		return "Success";
 
 	}
 
