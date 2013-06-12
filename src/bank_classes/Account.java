@@ -23,6 +23,7 @@ public class Account {
 	    this.account_code = account_code;
 	    this.branch_code = branch_code;
 	    this.initial_balance = initial_balance;
+	    //this.history = History();
 	}
 		
 	public Money get_balance() {
