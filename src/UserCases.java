@@ -16,17 +16,17 @@ public class UserCases {
 	@Before
 	public void setUp() throws Exception {
 		Calendar birth = new GregorianCalendar(2021,12,13);
-		user = new User("John","Stuart",birth,"SYSTEM_USER","XCKLMN$#え");
+		user = new User("John","Stuart",birth,"193022","XCKLMN$#え");
 	}
 
 	@Test
 	public void username_matching_matches() {
-		assertTrue(user.usernameMatch("SYSTEM_USER"));
+		assertTrue(user.usernameMatch("193022"));
 	}
 
 	@Test
 	public void username_matching_dont_match() {
-		assertFalse(user.usernameMatch("OTHER"));
+		assertFalse(user.usernameMatch("179411"));
 	}
 
 	@Test

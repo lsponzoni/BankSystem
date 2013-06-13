@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import bank_classes.Branch;
 import bank_classes.User;
-import bankexceptions.UserNotFoundException;
+import bankexceptions.NotFoundException;
 
 public class BranchCases {
 	Branch b;
@@ -24,8 +24,8 @@ public class BranchCases {
 		 b = new Branch("193022","Agência Centro",clients, clerks);
 	}
 
-	@Test(expected = UserNotFoundException.class) 
-	public void cant_get_inexistent_client() throws UserNotFoundException {
+	@Test(expected = NotFoundException.class) 
+	public void cant_get_inexistent_client() throws NotFoundException {
 		String inexistent_user = "John Constantine";
 		b.get_client(inexistent_user);
 	}

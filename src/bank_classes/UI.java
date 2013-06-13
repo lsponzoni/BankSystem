@@ -19,11 +19,15 @@ import java.util.Scanner;
 
 
 
-public abstract class UI {
+public class UI {
 	private boolean logged_in;
 	protected User current_user;
 	protected Branch access_branch;
+	protected Bank facade;
 	
+	public UI(Bank bank, Branch branch) {
+		// Bank and branch data addition
+	}
 	public  String get_string(String question){
 		InputStreamReader cin = new InputStreamReader(System.in);
 		Scanner in = new Scanner(cin);
@@ -32,7 +36,9 @@ public abstract class UI {
 		in.close();
 		return input;
 	}
-	public abstract String operation_result(String effects);
+	public String operation_result(String effects){
+		return "";
+	}
 	
 	protected String login(String username, String branch, String password) {
 		logged_in = true;
@@ -72,7 +78,7 @@ public abstract class UI {
 		return "";
 	}
 	
-	private void get_period_from_user() {
+	public void get_period_from_user() {
 	    //TODO this is not void
 	}
 	
@@ -80,11 +86,11 @@ public abstract class UI {
 		//TODO this is not void
 	}
 	
-	private String transaction_history(Client holder, Date from, Date to) {
+	private String transaction_history() {
 		return "";
 	}
 		
-	public String transaction_history_to_print(Client holder, Date from, Date to) {
+	public String transaction_history_to_print() {
 		return "";
 	}
 	

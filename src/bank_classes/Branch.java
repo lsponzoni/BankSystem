@@ -2,7 +2,7 @@ package bank_classes;
 import java.util.Collection;
 
 import bankexceptions.DuplicateException;
-import bankexceptions.UserNotFoundException;
+import bankexceptions.NotFoundException;
 
 //
 //
@@ -25,14 +25,14 @@ public class Branch {
 		boolean found = true;
 		try {
 			get_user(collection, user_id);
-		} catch (UserNotFoundException e) {
+		} catch (NotFoundException e) {
 			found = false;
 		}
 		return found;
 	}
 
 	private User get_user(Iterable<User> collection, String user_id)
-			throws UserNotFoundException {
+			throws NotFoundException {
 		User search_result = null;
 		for (User each : collection) {
 			if (each.usernameMatch(user_id)) {
@@ -41,7 +41,7 @@ public class Branch {
 			}
 		}
 		if (search_result == null) {
-			throw new UserNotFoundException(user_id);
+			throw new NotFoundException(user_id);
 		}
 		return search_result;
 	}
@@ -62,11 +62,11 @@ public class Branch {
 		this.accounts = client;
 	}
 
-	public Clerk get_clerk(String username) throws UserNotFoundException {
+	public Clerk get_clerk(String username) throws NotFoundException {
 		return (Clerk) get_user(clerks, username);
 	}
 
-	public Client get_client(String username) throws UserNotFoundException {
+	public Client get_client(String username) throws NotFoundException {
 		return (Client) get_user(accounts, username);
 	}
 

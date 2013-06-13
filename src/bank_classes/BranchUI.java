@@ -11,6 +11,11 @@ package bank_classes;
 //
 
 public class BranchUI extends UI {
+	public BranchUI(Bank bank, Branch branch) {
+		// TODO Auto-generated constructor stub
+		super(bank,branch);
+	}
+
 	public String add_new_account_to_system(Client client, String initial_balance) {
 		// ignore how hard it is to create the client out there
 		String client_id, branch_id;

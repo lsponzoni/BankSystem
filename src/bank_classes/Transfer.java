@@ -41,7 +41,7 @@ public class Transfer extends Transaction {
 	}
 
 	public String get_to() {
-		return from_account_code;
+		return to_account_code;
 	}
 
 	public Money get_value() {
