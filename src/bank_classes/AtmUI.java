@@ -12,8 +12,7 @@ package bank_classes;
 
 public class AtmUI extends UI {
 	public AtmUI(Bank bank, Branch branch){
-		super();
-		
+		super(bank, branch);
 	}
 	public String deposit(Number ammount, String cashParcelId) {
 		return ".";

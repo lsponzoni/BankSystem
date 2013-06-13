@@ -8,8 +8,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bank_classes.Account;
 import bank_classes.Branch;
+import bank_classes.Client;
+import bank_classes.Money;
 import bank_classes.User;
+import bankexceptions.DuplicateException;
 import bankexceptions.NotFoundException;
 
 public class BranchCases {
@@ -34,6 +38,11 @@ public class BranchCases {
 		String inexistent_user = "John Constantine";
 		boolean account_status = b.has_account(inexistent_user);
 		assertFalse(account_status);
+	}
+
+	@Test(expected = DuplicateException.class) 
+	public void cant_add_2_of_same() throws DuplicateException {
+		fail("Not implemented.");
 	}
 
 }

@@ -31,14 +31,14 @@ public class SystemTest {
 		Branch atm3 = new Branch("ATM5012","Caixa Eletrônico 12 Shopping Iguatemi",null,null);
 		// Create the clients
 		//Client(String name, String surname, Calendar birthday,String username, String password, String cpf)
-		Calendar c = new GregorianCalendar();
-		c.set(Calendar.YEAR, 1980);
-		c.set(Calendar.MONTH, 11); // 11 = december
-		c.set(Calendar.DAY_OF_MONTH, 24); // christmas eve
+		Calendar born_at = new GregorianCalendar();
+		born_at.set(Calendar.YEAR, 1980);
+		born_at.set(Calendar.MONTH, 11); // 11 = december
+		born_at.set(Calendar.DAY_OF_MONTH, 24); // christmas eve
 
-		Client mario =  new Client("Mario","Brother",c,"193022","It's me Mario","13189003018");
-		Client julia =  new Client("Julia","Ana",c,"194022","I am not mario","114929803");
-		Client fefe =  new Client("FE","FE",c,"195022","I am not mario also","1110821529");
+		Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario","13189003018");
+		Client julia =  new Client("Julia","Ana",born_at,"194022","I am not mario","114929803");
+		Client fefe =  new Client("FE","FE",born_at,"195022","I am not mario also","1110821529");
 
 		List<User> clients_br1 = new ArrayList<User>();
 
@@ -50,11 +50,11 @@ public class SystemTest {
 		clients_br2.add(fefe);
 		
 		List<User> clerks_br1 = new ArrayList<User>();
-		Clerk mario2 = new Clerk("Mario","Mario",c,"193022","It's me Mario");
+		Clerk mario2 = new Clerk("Mario","Mario",born_at,"193022","It's me Mario");
 		clerks_br1.add(mario2);
 		
 		List<User> clerks_br2 = new ArrayList<User>();
-		Clerk mario3 = new Clerk("Super","Mario",c,"3022","So many marios.");
+		Clerk mario3 = new Clerk("Super","Mario",born_at,"3022","So many marios.");
 		clerks_br2.add(mario3);
 		clerks_br2.add(mario3);
 		

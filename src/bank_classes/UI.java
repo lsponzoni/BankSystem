@@ -28,7 +28,9 @@ public class UI {
 	public UI(Bank bank, Branch branch) {
 		// Bank and branch data addition
 	}
+	
 	public  String get_string(String question){
+		// raw input output
 		InputStreamReader cin = new InputStreamReader(System.in);
 		Scanner in = new Scanner(cin);
 		System.out.println(question);
