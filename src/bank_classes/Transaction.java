@@ -17,13 +17,13 @@ import java.util.Date;
 
 public class Transaction {
 	private String access_location_branch_code;
-	private Date date;
+	private Date time_stamp;
 	private Money value;
 	protected String this_acc_code;
 
 	public Transaction(String this_acc_code, String location_access_branch_code, Date date, Money value){
 		this.access_location_branch_code = location_access_branch_code;
-		this.date = date;
+		this.time_stamp = date;
 		this.value = value;
 		this.this_acc_code = this_acc_code;
 	}
@@ -33,18 +33,22 @@ public class Transaction {
 	}
 
 	public Date get_date() {
-          return date;
+          return time_stamp;
 	}
 
 	public boolean newer_than(Date time) {
-           return date.before(time);
+           return time_stamp.before(time);
 	}
 
 	public boolean older_than(Date time) {
-           return date.after(time);
+           return time_stamp.after(time);
 	}
 
 	public boolean in_time_period(Date from, Date to) {
            return older_than(from) && newer_than(to);     
+	}
+	
+	public String toString(){
+		return "$" + value.toString() + "at "+ access_location_branch_code + " " + time_stamp.toString();
 	}
 }
