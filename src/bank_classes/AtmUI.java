@@ -16,7 +16,7 @@ public class AtmUI extends UI {
 		
 	}
 	public String deposit(Number ammount, String cashParcelId) {
-		return "";
+		return ".";
 	}
 
 	public String withdraw(Number ammout) {

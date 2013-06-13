@@ -26,9 +26,14 @@ public class Account {
 	    this.history = new History();
 	    
 	    Date now = new Date();
-	    Deposit t = new Deposit(branch_code, now, initial_balance, account_code, "On creation.");
-	    this.add_to_history(t);
+	    Deposit first = new Deposit(branch_code, initial_balance, account_code, "On creation.");
+	    this.add_to_history(first);
 	}
+	
+	public Account(String account_number, Branch branch, Money initial_balance) {
+		new Account(account_code,branch.get_code(),initial_balance);
+	}
+	
 	public Money get_balance() {
 		return history.sum_transaction_values();	
 	}
@@ -41,10 +46,15 @@ public class Account {
 		history.store_transaction(t);
 	}
 	
+	public String get_account_code(){
+		return account_code;
+	}
+	
 	public String get_branch_code() {
 		return branch_code;	
 	}
 	
+	// There should be more returning data here? 
 	public String toString(){
 		return account_code;
 	}

@@ -23,11 +23,19 @@ public class Transaction {
 
 	public Transaction(String this_acc_code, String location_access_branch_code, Date date, Money value){
 		this.access_location_branch_code = location_access_branch_code;
-		this.time_stamp = date;
+		this.time_stamp = new Date();
 		this.value = value;
 		this.this_acc_code = this_acc_code;
 	}
-		
+
+	public Transaction(String this_acc_code, String location_access_branch_code, Money value){
+		this.access_location_branch_code = location_access_branch_code;
+		this.time_stamp = new Date();
+		this.value = value;
+		this.this_acc_code = this_acc_code;
+	}
+
+	
 	public Money get_value() {
           return value;
 	}

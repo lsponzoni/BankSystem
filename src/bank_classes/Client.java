@@ -12,16 +12,17 @@ import java.util.Calendar;
 //
 //
 
+import bankexceptions.DuplicateException;
+
 public class Client extends User {
 	private String cpf;
- 
-	public Client(String name, String surname, Calendar birthday,
-			String username, String password, String cpf) {
-		super(name, surname, birthday, username, password);
+	private Account account;
+	public Client(String name, String surname, Calendar birthday, String password, String cpf) {
+		super(name, surname, birthday, null, password);
 		// TODO Auto-generated constructor stub
 		this.cpf = cpf;
+		this.account = null;
 	}
-
 
 	public String get_account_id() {
 		return super.getUsername();
@@ -29,7 +30,22 @@ public class Client extends User {
 	public String get_cpf(){
 		return cpf;
 	}
+	
 	public String toString(){
 		return super.toString() + " CPF:" + cpf;
 	}
+	
+	public Account get_account(){
+		return account;
+	}
+	
+	public void add_account(Account acc) throws DuplicateException {
+		if(this.account != null){
+			throw new DuplicateException(acc.get_account_code());
+		} else {
+			this.account = account;
+			this.setUsername(account.get_account_code());
+		}
+	}
+	
 }
