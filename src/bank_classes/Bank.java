@@ -41,4 +41,12 @@ public class Bank {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public String deposit (String ammount, String cashParcelId, Client holder){
+		return "";
+	}
+	
+	public String transfer(Money ammount, String from, String to) {
+		return "";
+	}
 }

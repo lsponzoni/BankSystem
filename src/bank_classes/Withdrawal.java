@@ -15,7 +15,7 @@ import java.util.Date;
 public class Withdrawal extends Transaction {
 	
 	public Withdrawal(String location_access_branch_code, Date date, Money value, String this_acc_code){
-		super(location_access_branch_code, date, value, this_acc_code);
+		super(this_acc_code,location_access_branch_code, date, value);
 	}
 	    
 	public Money get_value() {

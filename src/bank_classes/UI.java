@@ -1,5 +1,7 @@
 package bank_classes;
 
+import java.io.Console;
+import java.io.DataInputStream;
 import java.util.Date;
 //
 //
@@ -11,38 +13,48 @@ import java.util.Date;
 //  @ Author : 
 //
 //
+import java.util.Scanner;
 
 
 
 
-public class UI {
+public abstract class UI {
 	private boolean logged_in;
 	protected User current_user;
 	protected Branch access_branch;
-	public String login(String username, String branch, String password) {
+	
+	public  String get_string(String question){
+		System.out.println(question);
+		return "";//input.readLine();
+		
+	}
+	public abstract String operation_result(String effects);
+	
+	protected String login(String username, String branch, String password) {
+		logged_in = true;
 		return "";
 	}
 	
-	public String logout() {
-		return null;
-	
+	protected String logout() {
+		logged_in = false; 
+		return "";
 	}
 	
 	private void disable_operations() {
-	
 	}
 	
 	public boolean isLoggedIn() {
 		return logged_in;
-	
 	}
 	
 	private String enable_financial_functions() {
-		return null;
+		return "";
 	
 	}
-	
-	public String deposit(Number ammount, String cashParcelId, Client holder) {
+	public String menu(){
+		return "";
+	}
+	public String deposit() {
 		return "Not implemented!";
 	
 	}
@@ -52,7 +64,7 @@ public class UI {
 	
 	}
 	
-	public String transfer(Number ammount, Client from, Client to) {
+	public String transfer() {
 		return "";
 	}
 	
@@ -67,12 +79,8 @@ public class UI {
 	private String transaction_history(Client holder, Date from, Date to) {
 		return "";
 	}
-	
-	private String transaction_history(Client holder, MonthOptionEnum month) {
-		return "";
-	}
-	
-	public String transaction_history_to_print(Client holder, TimeOptionEnum statement_type) {
+		
+	public String transaction_history_to_print(Client holder, Date from, Date to) {
 		return "";
 	}
 	

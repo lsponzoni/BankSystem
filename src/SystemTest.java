@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import bank_classes.Account;
+import bank_classes.AtmUI;
 import bank_classes.Bank;
 import bank_classes.Branch;
 import bank_classes.BranchUI;
@@ -86,7 +87,7 @@ public class SystemTest {
 		return b;
 	}
 	public static void main(String[] args) {
-	   Bank b = populate();
+	   Bank bank = populate();
 	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
 	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
 	   //UI.main_loop(); 

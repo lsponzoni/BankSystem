@@ -46,6 +46,6 @@ public class Account {
 	}
 	
 	public String toString(){
-		return "";
+		return account_code;
 	}
 }
