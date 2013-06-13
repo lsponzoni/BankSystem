@@ -36,6 +36,21 @@ public class Transfer extends Transaction {
 		this.from_branch_code = from_branch_code;		
 	}	
 
+	public Transfer(Account this_account, Branch access_branch, Date date, 
+			 Money value, Account to, Account from) throws InvalidTransfer {
+		super(this_account.get_account_code(), location_access_branch_code, date, value);
+		
+		if(	!this_acc_code.equals(from_acc_code) 
+			&& !this_acc_code.equals(to_acc_code)){
+			throw new InvalidTransfer(" Trying to transfer data of another account.");
+		}
+		this.to_account_code = to_acc_code;
+		this.to_branch_code = to_branch_code;
+		this.from_account_code = from_acc_code;
+		this.from_branch_code = from_branch_code;		
+	}	
+
+	
 	public String get_from() {
 		return from_account_code;
 	}

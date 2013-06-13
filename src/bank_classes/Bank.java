@@ -54,11 +54,11 @@ public class Bank {
 		branches.add(branch);
 	}
 
-	public void add_clerk_account(Branch branch, Clerk new_user) {
+	public void add_clerk_account(Branch branch, Clerk new_user) throws DuplicateException {
 		branch.add_clerk(new_user);
 	}
 
-	public void add_client_account(Branch branch, Client new_client, String initial_balance) {
+	public void add_client_account(Branch branch, Client new_client, String initial_balance) throws DuplicateException {
 		Money first_deposit;
 		String account_number = new_account_number();
 		
@@ -81,7 +81,14 @@ public class Bank {
 		return "Sucess on deposit.\n";
 	}
 	
-	public String transfer(Money ammount, String from, String to) {
+	public String withdraw(String ammount, Branch location, Account acc){
+		Money withdraw_ammount = new Money(ammount);
+		Withdrawal w = new Withdrawal(acc,location, withdraw_ammount);
+		acc.add_to_history(w);
+		return "Get your money ->";
+	}
+	public String transfer(Money ammount, Account from, Account to) {
+		new Transfer(from,to);
 		return "";
 	}
 }
