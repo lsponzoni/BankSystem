@@ -76,7 +76,7 @@ public class Transfer extends Transaction {
 
 	public String toString(){
 		return "Transfer $" + super.toString() + "\n" +
-				" from acc:" + from_account_code + " branch: "+ from_branch_code + "\n" +
-				" to acc:"+ to_account_code + " branch: " + to_branch_code;
+				" from account:" + from_account_code + " branch: "+ from_branch_code + "\n" +
+				" to account:"+ to_account_code + " branch: " + to_branch_code;
 	}
 }
