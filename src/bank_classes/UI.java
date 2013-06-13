@@ -2,6 +2,7 @@ package bank_classes;
 
 import java.io.Console;
 import java.io.DataInputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
 //
 //
@@ -24,9 +25,12 @@ public abstract class UI {
 	protected Branch access_branch;
 	
 	public  String get_string(String question){
+		InputStreamReader cin = new InputStreamReader(System.in);
+		Scanner in = new Scanner(cin);
 		System.out.println(question);
-		return "";//input.readLine();
-		
+		String input = in.nextLine();
+		in.close();
+		return input;
 	}
 	public abstract String operation_result(String effects);
 	
