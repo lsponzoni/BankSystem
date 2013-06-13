@@ -43,6 +43,7 @@ public class UI {
 	}
 	
 	protected String login(String username, String branch, String password) {
+		// dummy login function
 		logged_in = true;
 		return "";
 	}
@@ -60,9 +61,15 @@ public class UI {
 	}
 	
 	private String enable_financial_functions() {
-		return "";
-	
+		return "Escolha uma operação: \n" +
+				"1> Impressão saldo \n" +
+				"2> Extrato \n" +
+				"3> Depósito \n" +
+				"4> Saque \n" +
+				"5> Transferência \n" +
+				"6> Logout de "+ current_user.getUsername();
 	}
+	
 	public String menu(){
 		return "";
 	}

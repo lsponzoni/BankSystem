@@ -38,16 +38,14 @@ public class History {
 		return sum;
 	}
 	
-	public void store_transaction(Deposit t) {
-		deposit_list.add(t);
-	}
-	
-	public void store_transaction(Withdrawal t) {
-		withdraw_list.add(t);
-	}
-	
-	public void store_transaction(Transfer t) {
-		transfer_list.add(t);
+	public void store_transaction(Transaction t) {
+		if(t instanceof Deposit){
+			deposit_list.add((Deposit) t);
+		} else if(t instanceof Withdrawal) {
+			withdraw_list.add((Withdrawal) t);
+		} else if(t instanceof Transfer) {
+			transfer_list.add((Transfer) t);			
+		}
 	}
 	
 	public Transfer[] get_all_transfers() {
@@ -61,24 +59,25 @@ public class History {
 	public Deposit[] get_all_deposits() {
 		   return (Deposit[]) deposit_list.toArray();
 	}
-	
+
+
 	public History get_transactions(Date from, Date to) {
 		History only_inside_interval_transactions = new History();
 		for(Withdrawal each: withdraw_list){
 			if(each.in_time_period(from, to)){
-	    		  only_inside_interval_transactions.store_transaction(each);  
-	    	  }
-	      }
-	      for(Deposit each : deposit_list){
-	    	  if(each.in_time_period(from, to)){
-	    		  only_inside_interval_transactions.store_transaction(each);  
-	    	  }
-	      }
-	      for(Transfer each : transfer_list){
-	    	  if(each.in_time_period(from, to)){
-	    		  only_inside_interval_transactions.store_transaction(each);  
-	    	  }
-	      }
+				only_inside_interval_transactions.store_transaction(each);  
+			}	  
+		}
+	    for(Deposit each : deposit_list){
+	    	if(each.in_time_period(from, to)){
+	    		only_inside_interval_transactions.store_transaction(each);  
+	    	}
+	    }
+	    for(Transfer each : transfer_list){
+	    	if(each.in_time_period(from, to)){
+	    		only_inside_interval_transactions.store_transaction(each);  
+	    	}
+	    }
 		return only_inside_interval_transactions;
 	}
 }

@@ -9,6 +9,7 @@ Para criar o projeto caso não existente (ou sem egit):
  No eclipse, com workspace diretorio pai do Banksystem:
  (p.ex: ../Banksystem ) 
  new java project ->  Name: Banksystem 
+
  
  Ele deve configurar automático, se houver alguma dependencia faltando um quickfix deve ser o suficiente.
 
