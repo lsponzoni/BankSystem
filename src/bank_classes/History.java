@@ -81,4 +81,21 @@ public class History {
 	      }
 		return only_inside_interval_transactions;
 	}
+	
+	public String toString(){
+		String extract;
+		extract = "Record of deposits:\n";
+		for(Deposit history_deposit : deposit_list){
+			extract=extract + history_withdraw.toString;
+		}
+		extract= extract + "Recors of Withdraws:\n";
+		for(Withdrawal history_withdraw : withdraw_list){
+			extract=extract + history_withdraw.toString;
+		}
+		extract= extract + "Recors of Transfers:\n";
+		for(Transfer history_Transfer : transfer_list){
+			extract=extract + history_withdraw.toString;
+		}
+		return extract;
+	}
 }

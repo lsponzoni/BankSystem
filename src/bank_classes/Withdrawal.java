@@ -30,4 +30,8 @@ public class Withdrawal extends Transaction {
 	public Money get_value() {
         return this.get_value().minus();
 	}
+	
+	public toString(){
+		return "Withdrawal:" + super.toString() + "\n "; 
+	}
 }
