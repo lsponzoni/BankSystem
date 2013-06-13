@@ -30,6 +30,6 @@ public class Client extends User {
 		return cpf;
 	}
 	public String toString(){
-		return super.toString() + "CPF:" + cpf;
+		return super.toString() + " CPF:" + cpf;
 	}
 }

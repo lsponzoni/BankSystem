@@ -2,17 +2,26 @@ Pablo:
 History 
 Account x  (nao testado)
 Withdraw x (nao testado)
-Transfer x (nao testado)
 
 Leonardo :
-User x (Testado): 53% de cobertura(Sem testes usando o ToString(); )
-Branch
+User (Completa e Testada): 53% de cobertura(N~ao testei o ToString(); )
+Clerk(aparentemente pronta) 
+Client(precisa de mais umas alteraç~oes para mexer com account)
+
+Deposit (nem vale a pena testar )
+Transfer (completa e testada) 
+Branch (devem estar faltando metodos de inserç~ao ainda)
+
 Client
 Clerk 
 BranchUI 
+
 Extras fora da especificação em uml:
        Money x Testado 100% de cobertura
        MoneyPair x Testado pela classe que testa o acima
-       		 (podia ser uma innerclass, mas nao vai)
+       		 (podia ser uma innerclass)
 		 Testado 90.1% de cobertura (construtor para unit e cents
-		 	       	  	     nao testado)
+		 	       	  	     nao testada)
+       InvalidTransfer( quando as contas da transfer n~ao consistentes)
+
+x (completo)

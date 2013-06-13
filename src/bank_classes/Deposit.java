@@ -15,9 +15,9 @@ import java.util.Date;
 public class Deposit extends Transaction {
 	private String cashParcelCode;
 
-	public Deposit(String location_access_branch_code, Date date, Money value,
-			String this_acc_code, String cashParcelCode) {
-		super(this_acc_code, location_access_branch_code, date, value);
+	public Deposit(String access_branch_code, Date date, Money value,
+			String acc_code, String cashParcelCode) {
+		super(acc_code, access_branch_code, date, value);
 		this.cashParcelCode = cashParcelCode;
 	}
 	
