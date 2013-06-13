@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class Client extends User {
 	private String cpf;
-
+ 
 	public Client(String name, String surname, Calendar birthday,
 			String username, String password, String cpf) {
 		super(name, surname, birthday, username, password);

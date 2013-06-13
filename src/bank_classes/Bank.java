@@ -25,12 +25,20 @@ public class Bank {
 
 	public Clerk get_clerk(String clerk_username, String branch_id) {
 		return null;
-		
-
 	}
 
 	public String next_account_number() {
 		return null;
 
+	}
+
+	public void add_branch(Branch branch) {
+		// TODO Auto-generated method stub
+		// Add the branch to the bank.
+	}
+
+	public void add_account(Account new_user) {
+		// TODO Auto-generated method stub
+		
 	}
 }

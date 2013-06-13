@@ -16,21 +16,18 @@ import java.util.Date;
 //
 
 public class Transaction {
-	private String location_access_branch_code;
+	private String access_location_branch_code;
 	private Date date;
 	private Money value;
-	private String this_acc_code;
+	protected String this_acc_code;
 
-	public Transaction(String location_access_branch_code, Date date, Money value, String this_acc_code){
-		this.location_access_branch_code = location_access_branch_code;
+	public Transaction(String this_acc_code, String location_access_branch_code, Date date, Money value){
+		this.access_location_branch_code = location_access_branch_code;
 		this.date = date;
 		this.value = value;
 		this.this_acc_code = this_acc_code;
 	}
-	
-	
-	
-	
+		
 	public Money get_value() {
           return value;
 	}

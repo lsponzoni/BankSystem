@@ -7,9 +7,11 @@ import java.util.List;
 import bank_classes.Account;
 import bank_classes.Bank;
 import bank_classes.Branch;
+import bank_classes.BranchUI;
 import bank_classes.Clerk;
 import bank_classes.Client;
 import bank_classes.Money;
+import bank_classes.UI;
 import bank_classes.User;
 
 
@@ -75,10 +77,22 @@ public class SystemTest {
 		Account julia_account = new Account(julia.get_account_id(),br2.get_code(),m2);
 		Account fefe_account = new Account(fefe.get_account_id(),br2.get_code(),m3);
 		
+		b.add_account(mario_account);
+		b.add_account(julia_account);
+		b.add_account(fefe_account);
 		// How to add the accounts to the system?
-
+		// For now system accounts are going to be appended to client owner
+		// or at least, it is what i believe will happen 
+		return b;
 	}
 	public static void main(String[] args) {
+	   Bank b = populate();
+	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
+	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
+	   //UI.main_loop(); 
+	   Client client = only_clerk_use.client_dataform();
+	   Money initial_balance = only_clerk_use.money_dataform();
+	   only_clerk_use.add_new_account_to_system(client, initial_balance);
 	}
 
 }

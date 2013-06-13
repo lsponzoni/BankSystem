@@ -99,5 +99,13 @@ public class Branch {
 	public void add_clerk(Clerk clerk) throws DuplicateException {
 		add_user(clerks,clerk);
 	}
-
+	
+	public String toString(){
+		String s;
+		s = "Branch: "+ name +  "\n" +
+			" Code: " + code +  "\n" +
+			" Clerk List: \n " + clerks.toString() + 
+			" Client List: \n " + accounts.toString();
+		return s;
+	}
 }

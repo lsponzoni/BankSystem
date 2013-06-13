@@ -51,7 +51,7 @@ public class MoneyTest {
 	}
 
 	@Test
-	public void do_minus_money(){
+	public void subtract_money(){
 		Money m1 = new Money(112);
 		Money m2 = new Money(112);
 		
@@ -60,6 +60,15 @@ public class MoneyTest {
 		assertEquals(money.toString(),"0,00");
 	}
 
+	@Test
+	public void do_minus_money(){
+		Money m1 = new Money(112);
+		
+		money = m1.minus();
+		
+		assertEquals(money.toString(),"-1,12");
+	}
+	
 	@Test
 	public void negative_value_money(){
 		Money money = new Money(-102);
