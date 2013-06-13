@@ -74,21 +74,17 @@ public class Bank {
 
 	}
 	
-	public String deposit (String ammount, String cashParcelId, Branch location, Account acc){
+	public String deposit (String ammount, String cashParcelId, Branch access_place, Account acc){
 		Money deposited_value= new Money(ammount);
-		Deposit d =	new Deposit(acc.get_account_code(), location.get_code(), deposited_value, cashParcelId);
+		Deposit d =	new Deposit(acc.get_account_code(), access_place.get_code(), deposited_value, cashParcelId);
 		acc.add_to_history(d);
-		return "Sucess on deposit.\n";
+		return "Success on deposit.\n";
 	}
 	
-	public String withdraw(String ammount, Branch location, Account acc){
+	public String withdraw(String ammount, Branch access_place, Account acc){
 		Money withdraw_ammount = new Money(ammount);
-		Withdrawal w = new Withdrawal(acc,location, withdraw_ammount);
+		Withdrawal w = new Withdrawal(acc,access_place, withdraw_ammount);
 		acc.add_to_history(w);
-		return "Get your money ->";
-	}
-	public String transfer(Money ammount, Account from, Account to) {
-		new Transfer(from,to);
-		return "";
+		return "Get your money.\n";
 	}
 }

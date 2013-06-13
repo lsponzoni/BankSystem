@@ -16,20 +16,20 @@ import java.util.Date;
 //
 
 public class Transaction {
-	private String access_location_branch_code;
+	private String gate_branch_code;
 	private Date time_stamp;
 	private Money value;
 	protected String this_acc_code;
 
 	public Transaction(String this_acc_code, String location_access_branch_code, Date date, Money value){
-		this.access_location_branch_code = location_access_branch_code;
+		this.gate_branch_code = location_access_branch_code;
 		this.time_stamp = new Date();
 		this.value = value;
 		this.this_acc_code = this_acc_code;
 	}
 
 	public Transaction(String this_acc_code, String location_access_branch_code, Money value){
-		this.access_location_branch_code = location_access_branch_code;
+		this.gate_branch_code = location_access_branch_code;
 		this.time_stamp = new Date();
 		this.value = value;
 		this.this_acc_code = this_acc_code;
@@ -57,6 +57,6 @@ public class Transaction {
 	}
 	
 	public String toString(){
-		return "$" + value.toString() + "at "+ access_location_branch_code + " " + time_stamp.toString();
+		return "$" + value.toString() + "at "+ gate_branch_code + " " + time_stamp.toString();
 	}
 }
