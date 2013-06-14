@@ -12,22 +12,42 @@ import java.util.Date;
 //
 //
 
+import bankexceptions.InvalidTransaction;
+
 public class Withdrawal extends Transaction {
 	
-	public Withdrawal(String this_acc_code, String location_access_code, Date date, Money value){
-		super(this_acc_code,location_access_code, date, value);
+	public Withdrawal(String this_acc_code, String location_access_code, Money value) throws InvalidTransaction{
+		super(this_acc_code,location_access_code, value);
+		if(value.is_negative()){
+			throw new InvalidTransaction("Negative Withdraw");
+		}
 	}
 
-	public Withdrawal(Account acc, Branch location_access, Date date, Money value){
+	public Withdrawal(String this_acc_code, String location_access_code, Money value, Date date) throws InvalidTransaction{
+		super(this_acc_code,location_access_code, date,  value);
+		if(value.is_negative()){
+			throw new InvalidTransaction("Negative Withdraw");
+		}
+
+	}
+
+	public Withdrawal(Account acc, Branch location_access, Money value, Date date) throws InvalidTransaction{
 		super(acc.get_account_code(),location_access.get_code(), date, value);
+		if(value.is_negative()){
+			throw new InvalidTransaction("Negative Withdraw");
+		}
+
 	}
 
-	public Withdrawal(Account acc, Branch location_access, Money value){
+	public Withdrawal(Account acc, Branch location_access, Money value) throws InvalidTransaction{
 		super(acc.get_account_code(),location_access.get_code(), value);
+		if(value.is_negative()){
+			throw new InvalidTransaction("Negative Withdraw");
+		}
 	}
 
 	
 	public Money get_value() {
-        return this.get_value().minus();
+        return super.get_value().minus();
 	}
 }

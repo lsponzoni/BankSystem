@@ -10,10 +10,6 @@ import java.util.*;
 //  @ Author : 
 //
 //
-
-
-
-
 public class History {
 	List<Withdrawal> withdraw_list;
 	List<Deposit> deposit_list;
@@ -32,9 +28,9 @@ public class History {
 	}
 	public Money sum_transaction_values() {
 	    Money sum = new Money(0);
-	    sum = sum_money(sum,deposit_list);
-	    sum = sum_money(sum,transfer_list);
-	    sum = sum_money(sum,withdraw_list);  
+	    sum = sum_money(sum, deposit_list);
+	    sum = sum_money(sum, transfer_list);
+	    sum = sum_money(sum, withdraw_list);  
 		return sum;
 	}
 	
@@ -60,7 +56,6 @@ public class History {
 		   return (Deposit[]) deposit_list.toArray();
 	}
 
-
 	public History get_transactions(Date from, Date to) {
 		History only_inside_interval_transactions = new History();
 		for(Withdrawal each: withdraw_list){
@@ -80,4 +75,5 @@ public class History {
 	    }
 		return only_inside_interval_transactions;
 	}
+	
 }

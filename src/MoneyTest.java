@@ -90,4 +90,11 @@ public class MoneyTest {
 		assertEquals(money.toString(),"-1,02");
 	}
 
+	@Test
+	public void negative_money(){
+		Money money = new Money("-1,02");
+				
+		assertTrue(money.is_negative());
+	}
+
 }

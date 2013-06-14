@@ -17,7 +17,13 @@ import bankexceptions.DuplicateException;
 public class Client extends User {
 	private String cpf;
 	private Account account;
-	
+
+	public Client(String name, String surname, Calendar birthday, String account, String password, String cpf) {
+		super(name, surname, birthday, null, password);
+		this.cpf = cpf;
+		this.account = null;
+	}
+
 	public Client(String name, String surname, Calendar birthday, String password, String cpf) {
 		super(name, surname, birthday, null, password);
 		this.cpf = cpf;

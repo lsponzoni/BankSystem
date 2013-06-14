@@ -26,17 +26,17 @@ public class SystemTest {
 		Bank b = new Bank();
 		// Create the atm Branches(Notice how they don't have anything at the Collections 
 		// Branch(String code, String name, Collection<User> client, Collection<User> clerks)
-		Branch atm1 = new Branch("ATM2009","Caixa Eletrônico 9 Rua Ceará",null,null);
-		Branch atm2 = new Branch("ATM3010","Caixa Eletrônico 10 Rua Anchieta",null,null);
-		Branch atm3 = new Branch("ATM5012","Caixa Eletrônico 12 Shopping Iguatemi",null,null);
+		Branch atm1 = new Branch("ATM2009","Caixa Eletrônico 9 Rua Ceará");
+		Branch atm2 = new Branch("ATM3010","Caixa Eletrônico 10 Rua Anchieta");
+		Branch atm3 = new Branch("ATM5012","Caixa Eletrônico 12 Shopping Iguatemi");
 		// Create the clients
 		//Client(String name, String surname, Calendar birthday,String username, String password, String cpf)
 		Calendar born_at = new GregorianCalendar();
 		born_at.set(Calendar.YEAR, 1980);
 		born_at.set(Calendar.MONTH, 11); // 11 = december
 		born_at.set(Calendar.DAY_OF_MONTH, 24); // christmas eve
-
-		Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario","13189003018");
+		
+		Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario");
 		Client julia =  new Client("Julia","Ana",born_at,"194022","I am not mario","114929803");
 		Client fefe =  new Client("FE","FE",born_at,"195022","I am not mario also","1110821529");
 

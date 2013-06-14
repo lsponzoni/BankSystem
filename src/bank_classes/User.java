@@ -1,5 +1,6 @@
 package bank_classes;
 import java.util.Calendar;
+import java.util.Random;
 
 //
 //
@@ -22,6 +23,10 @@ public class User {
 	public boolean passwordMatch(String password) {
 		return this.password.equals(password);
 	}
+	
+	public void setPassword(String password){
+		this.password = password;
+	}
 
 	public boolean usernameMatch(String username) {
 		return this.getUsername().equals(username);
@@ -33,6 +38,12 @@ public class User {
 		this.birthday = birthday;
 		this.setUsername(username);
 		this.password = password;
+	}
+	
+	public static String new_random_password(){
+		Random random_number = new Random();
+		Long password_number = random_number.nextLong();
+		return password_number.toString();
 	}
 	
 	public String toString(){

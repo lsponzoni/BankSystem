@@ -1,4 +1,5 @@
 package bank_classes;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import bankexceptions.DuplicateException;
@@ -62,6 +63,14 @@ public class Branch {
 		this.accounts = client;
 	}
 
+
+	public Branch(String code, String name) {
+		this.code = code;
+		this.name = name;
+		this.clerks = new ArrayList<User>(10);
+		this.accounts = new ArrayList<User>(10);
+	}
+
 	public Clerk get_clerk(String username) throws NotFoundException {
 		return (Clerk) get_user(clerks, username);
 	}
@@ -99,13 +108,13 @@ public class Branch {
 	public void add_clerk(Clerk clerk) throws DuplicateException {
 		add_user(clerks,clerk);
 	}
-	
+
 	public String toString(){
 		String s;
 		s = "Branch: "+ name +  "\n" +
-			" Code: " + code +  "\n" +
-			" Clerk List: \n " + clerks.toString() + 
-			" Client List: \n " + accounts.toString();
+				" Code: " + code +  "\n" +
+				" Clerk List: \n " + clerks.toString() + 
+				" Client List: \n " + accounts.toString();
 		return s;
 	}
 }

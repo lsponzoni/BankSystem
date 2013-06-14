@@ -7,6 +7,9 @@ public class Money {
 		one_hundred_ammount = x;  
 	}
 
+	public boolean is_negative(){
+		return one_hundred_ammount < 0;
+	}
 	public Money(double x){
 		one_hundred_ammount =(int) (x * 100);  
 	}
