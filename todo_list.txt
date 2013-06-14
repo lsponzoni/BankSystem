@@ -1,3 +1,5 @@
+"Pacote stub"
+
 Pablo:
 History 
 Account x  (nao testado)

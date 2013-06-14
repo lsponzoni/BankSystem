@@ -1,15 +1,23 @@
-package bank_classes;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Date;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import bank_classes.Deposit;
+import bank_classes.History;
+import bank_classes.Money;
+import bank_classes.Transaction;
+import bank_classes.Transfer;
+import bank_classes.TransferRole;
+import bank_classes.Withdrawal;
 import bankexceptions.InvalidTransaction;
 
 public class HistoryTest {
@@ -33,11 +41,13 @@ public class HistoryTest {
 
 		h = new History();
 	}
-
-	@Ignore
 	@Test
 	public void date_order(){
 		assertTrue(first_date.before(second_date));
+	}
+	@Test
+	public void keep_date_order(){
+		assertTrue(third_date.after(second_date));
 	}
 	
 	@Test
@@ -58,13 +68,13 @@ public class HistoryTest {
 
 	@Test
 	public void history_filters_return_all() throws InvalidTransaction {
-		Transfer t = new Transfer(TransferRole.RECEIVE,"ok",first_date, m,"me", "ok","to", "to"	);
-		Deposit d = new Deposit("me", "ok",m, "xyz", first_date);
-		Withdrawal w = new Withdrawal("ok", "ok", m, first_date);
+		Transfer t = new Transfer(TransferRole.RECEIVE,"ok",second_date, m,"me", "ok","to", "to"	);
+		Deposit d = new Deposit("me", "ok",m, "xyz", second_date);
+		Withdrawal w = new Withdrawal("ok", "ok", m, second_date);
 		h.store_transaction(d);
 		h.store_transaction(w);
 		h.store_transaction(t);
-		assertEquals(h,h.get_transactions(first_date,third_date));
+		assertEquals(h.toString(),h.get_transactions(first_date,third_date).toString());
 	}
 
 	@Test
@@ -103,5 +113,24 @@ public class HistoryTest {
 		assertEquals((new History()).toString(), h.get_transactions(first_date,third_date).toString());
 	}
 
+	@Test
+	public void history_filters_empty_when_equal_to_last() throws InvalidTransaction {
+		Transfer t = new Transfer(TransferRole.RECEIVE,"ok",third_date, m,"me", "ok","to", "to"	);
+		Deposit d = new Deposit("me", "ok",m, "xyz",third_date);
+		Withdrawal w = new Withdrawal("ok", "ok", m,third_date);
+		h.store_transaction(d);
+		h.store_transaction(w);
+		h.store_transaction(t);
+		
+		assertEquals((new History()).toString(), h.get_transactions(first_date,third_date).toString());
+	}
+
+	@Test(expected = InvalidTransaction.class)
+	public void history_adds_even_when_infered_Type() throws InvalidTransaction {
+		Transaction t = new Transfer(TransferRole.RECEIVE,"ok",third_date, m,"me", "ok","to", "to"	);
+
+		h.store_transaction(t);
+		assertEquals(h.toString(), "");
+	}
 
 }

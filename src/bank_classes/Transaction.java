@@ -57,6 +57,6 @@ public class Transaction {
 	}
 	
 	public String toString(){
-		return "$" + value.toString() + "at "+ gate_branch_code + " " + time_stamp.toString();
+		return " $" + value.toString() + " at "+ gate_branch_code + " " + time_stamp.toString();
 	}
 }

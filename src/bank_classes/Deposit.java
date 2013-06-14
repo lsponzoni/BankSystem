@@ -31,6 +31,6 @@ public class Deposit extends Transaction {
 	}
 
 	public String toString(){
-		return "Deposit" + super.toString() + "\n " + "Parcel: " +cashParcelCode; 
+		return "Deposit: " + super.toString() + "\n " + "Parcel: " +cashParcelCode; 
 	}
 }
