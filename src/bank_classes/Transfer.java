@@ -12,6 +12,8 @@ import java.util.Date;
 //
 //
 
+import bankexceptions.InvalidTransaction;
+
 public class Transfer extends Transaction {
 	private String to_account_code;
 	private String to_branch_code;
@@ -40,7 +42,7 @@ public class Transfer extends Transaction {
 								 from.get_account_code(), from.get_branch_code());
 	}
 	
-	public static String execute_transfer(Branch gate, Money ammount, Account from, Account to) {
+	public static String execute_transfer(Branch gate, Money ammount, Account from, Account to) throws InvalidTransaction {
 		Date date = new Date();
 		
 		Transfer f = newTransfer(TransferRole.SEND, gate, ammount,date, from, to);

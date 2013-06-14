@@ -23,7 +23,7 @@ public class Transaction {
 
 	public Transaction(String this_acc_code, String location_access_branch_code, Date date, Money value){
 		this.gate_branch_code = location_access_branch_code;
-		this.time_stamp = new Date();
+		this.time_stamp = date;
 		this.value = value;
 		this.this_acc_code = this_acc_code;
 	}

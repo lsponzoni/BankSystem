@@ -1,8 +1,6 @@
 package bank_classes;
 import java.util.*;
 import java.lang.StringBuilder;
-import org.junit.matchers.JUnitMatchers;
-
 import bankexceptions.InvalidTransaction;
 //
 //
@@ -20,9 +18,9 @@ public class History {
 	List<Transfer> transfer_list;
 
 	public History(){
-		withdraw_list = new ArrayList<Withdrawal>(50);
-		deposit_list = new ArrayList<Deposit>(50);
-		transfer_list = new ArrayList<Transfer>(50);
+		withdraw_list = new ArrayList<Withdrawal>(10);
+		deposit_list = new ArrayList<Deposit>(10);
+		transfer_list = new ArrayList<Transfer>(10);
 	}
 	private static Money sum_money(Money sum, List<? extends Transaction> transaction_list){
 		for(Transaction each: transaction_list){	    	  
@@ -74,16 +72,16 @@ public class History {
 	
 	public String toString(){
 		StringBuilder extract = new StringBuilder("\nRecord of deposits:\n");
-		for(Deposit history_deposit : deposit_list){
-			extract.append(history_deposit.toString());
+		for(Deposit deposit : deposit_list){
+			extract.append(deposit.toString());
 		}
 		extract.append("\nRecords of Withdraws:\n");
-		for(Withdrawal history_withdraw : withdraw_list){
-			extract.append(history_withdraw.toString());
+		for(Withdrawal withdraw : withdraw_list){
+			extract.append(withdraw.toString());
 		}
 		extract.append("\nRecords of Transfers:\n");
-		for(Transfer history_Transfer : transfer_list){
-			extract.append(history_Transfer.toString());
+		for(Transfer transfer : transfer_list){
+			extract.append(transfer.toString());
 		}
 		return extract.toString();
 	}

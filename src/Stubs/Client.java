@@ -4,7 +4,7 @@ package Stubs;
 public class Client extends bank_classes.Client {
 
 	public Client(String username, String password) {
-		super("", "", null, "", "");
+		super("", "", null, "", "", "");
 		super.setUsername(username);
 		super.setPassword(password);
 	}

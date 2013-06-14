@@ -1,20 +1,17 @@
 
 
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
+import java.util.Calendar;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import Stubs.Client;
-import bank_classes.Account;
 import bank_classes.Branch;
 import bank_classes.Clerk;
-import bank_classes.Money;
-import bank_classes.User;
 import bankexceptions.DuplicateException;
 import bankexceptions.NotFoundException;
 

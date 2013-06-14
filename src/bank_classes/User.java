@@ -21,7 +21,11 @@ public class User {
 				   password;
 
 	public boolean passwordMatch(String password) {
-		return this.password.equals(password);
+		return this.getPassword().equals(password);
+	}
+
+	protected String getPassword() {
+		return password;
 	}
 	
 	public void setPassword(String password){
@@ -52,7 +56,7 @@ public class User {
 					surname,
 					birthday.toString(),
 					getUsername(),
-					password);
+					getPassword());
 	}
 
 	public String getUsername() {

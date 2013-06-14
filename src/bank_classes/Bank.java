@@ -46,7 +46,7 @@ public class Bank {
 	public void add_clerk_account(Branch branch, Clerk new_user) throws DuplicateException {
 		branch.add_clerk(new_user);
 	}
-	public void add_client_account(Branch branch, Client new_client, String initial_balance) throws DuplicateException {
+	public void add_client_account(Branch branch, Client new_client, String initial_balance) throws DuplicateException, InvalidTransaction {
 		Money first_deposit;
 		String account_number = new_account_number();
 		
@@ -61,13 +61,13 @@ public class Bank {
 		}
 
 	}	
-	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) throws NotFoundException{
+	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) throws NotFoundException, InvalidTransaction{
 		Money transfer_ammount = new Money(ammount);
 		Account to = get_client(to_account,to_branch).get_account();
 		Transfer.execute_transfer(gate,transfer_ammount, account, to);
 		return "Sucess";
 	}
-	public String deposit (String ammount, String cashParcelId, Branch gate, Account account){
+	public String deposit (String ammount, String cashParcelId, Branch gate, Account account) throws InvalidTransaction{
 		Money deposited_value= new Money(ammount);
 		Deposit d =	new Deposit(account.get_account_code(), gate.get_code(), deposited_value, cashParcelId);
 		account.add_to_history(d);
