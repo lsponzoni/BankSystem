@@ -36,13 +36,13 @@ public class SystemTest {
 		born_at.set(Calendar.MONTH, 11); // 11 = december
 		born_at.set(Calendar.DAY_OF_MONTH, 24); // christmas eve
 		
-		Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario");
+//		Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario");
 		Client julia =  new Client("Julia","Ana",born_at,"194022","I am not mario","114929803");
 		Client fefe =  new Client("FE","FE",born_at,"195022","I am not mario also","1110821529");
 
 		List<User> clients_br1 = new ArrayList<User>();
 
-		clients_br1.add(mario);
+//		clients_br1.add(mario);
 		
 		List<User> clients_br2 = new ArrayList<User>();
 
@@ -74,13 +74,13 @@ public class SystemTest {
 		Money m2 = new Money(19091);
 		Money m3 = new Money(19031);
 
-		Account mario_account = new Account(mario.get_account_id(),br1.get_code(),m1);
-		Account julia_account = new Account(julia.get_account_id(),br2.get_code(),m2);
-		Account fefe_account = new Account(fefe.get_account_id(),br2.get_code(),m3);
+//		Account mario_account = new Account(mario.get_account_id(),br1.get_code(),m1);
+//		Account julia_account = new Account(julia.get_account_id(),br2.get_code(),m2);
+//		Account fefe_account = new Account(fefe.get_account_id(),br2.get_code(),m3);
 		
-		b.add_account(mario_account);
-		b.add_account(julia_account);
-		b.add_account(fefe_account);
+//		b.add_account(mario_account);
+//		b.add_account(julia_account);
+//		b.add_account(fefe_account);
 		// How to add the accounts to the system?
 		// For now system accounts are going to be appended to client owner
 		// or at least, it is what i believe will happen 
@@ -88,12 +88,16 @@ public class SystemTest {
 	}
 	public static void main(String[] args) {
 	   Bank bank = populate();
-	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
-	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
-	   //UI.main_loop(); 
-	   Client client = only_clerk_use.client_dataform();
-	   Money initial_balance = only_clerk_use.money_dataform();
-	   only_clerk_use.add_new_account_to_system(client, initial_balance);
+	   Branch b = new Branch("12313", "123213");
+//	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
+//	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
+//	   //UI.main_loop(); 
+//	   Client client = only_clerk_use.client_dataform();
+//	   Money initial_balance = only_clerk_use.money_dataform();
+//	   only_clerk_use.add_new_account_to_system(client, initial_balance);
+	   
+	   UI ui = new UI(bank, b);
+	   ui.menu();
 	}
 
 }
