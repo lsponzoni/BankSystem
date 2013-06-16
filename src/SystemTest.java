@@ -54,7 +54,7 @@ public class SystemTest {
 		clients_br2.add(fefe);
 		
 		List<User> clerks_br1 = new ArrayList<User>();
-		Clerk mario2 = new Clerk("Mario","Mario",born_at,"193022","It's me Mario");
+		Clerk mario2 = new Clerk("Mario","Mario",born_at,"4022","It's me Mario");
 		clerks_br1.add(mario2);
 		
 		List<User> clerks_br2 = new ArrayList<User>();
@@ -75,57 +75,192 @@ public class SystemTest {
 		return b;
 	}
 	
-	   
+	   //testa account duplicada
       
 	   @Test (expected = DuplicateException.class)
-	   public void duplicated_account() throws DuplicateException
+	   public void duplicated_account_mario() throws DuplicateException
 	   {
-		   Bank bank = populate();
-		   bank.add_client_account(bank.get_branch("FIL2001"), bank.get_client("193022","ATM2009"),"1000");
+		   Bank bank = new Bank();
+		   bank = populate();
+		   bank.add_client_account(bank.get_branch("FIL2001"), bank.get_client("193022","FIL2001"),"1000");
 	   }
+	   
 	   @Test (expected = DuplicateException.class)
-	   public void duplicated_clerks() throws DuplicateException
+	   public void duplicated_account_julia() throws DuplicateException
+	   {
+		   Bank bank = new Bank();
+		   bank = populate();
+		   bank.add_client_account(bank.get_branch("FIL3001"), bank.get_client("194022","FIL2001"),"1000");
+	   }
+	   
+	   @Test (expected = DuplicateException.class)
+	   public void duplicated_account_fefe() throws DuplicateException
+	   {
+		   Bank bank = new Bank();
+		   bank = populate();
+		   bank.add_client_account(bank.get_branch("FIL3001"), bank.get_client("195022","FIL2001"),"1000");
+	   }
+	   
+	   
+	   //testa clerk duplicado	   
+	   
+	   @Test (expected = DuplicateException.class)
+	   public void duplicated_clerks_mario() throws DuplicateException
 	   {
 		   Clerk clerk_test = new Clerk("Mario","Mario",born_at,"193022","It's me Mario");//cleark mario
-		   Bank bank = populate();
+		   Bank bank = new Bank();
+		   bank = populate();
 		   add_clerk_account(bank.get_branch("FIL2001"),clerk_test);//tries to add an existing client
 	   }
-	   @Test
-	   public void test_transfer()//testa se transferiu
+	   
+	   @Test (expected = DuplicateException.class)
+	   public void duplicated_clerks_super_mario() throws DuplicateException
 	   {
+		   Clerk clerk_test=new Clerk("Super","Mario",born_at,"3022","So many marios.");
+		   Bank bank = new Bank();
+		   bank = populate();
+		   add_clerk_account(bank.get_branch("FIL3001"),clerk_test);//tries to add an existing client
+	   }   
+	   
+	     
+	   
+	   
+	 //testa transferencia 
+	   	   
+	   @Test
+	   public void test_transfer_mario_to_julia()
+	   {//mario to julia
 		   String result;
-		   Bank bank = populate();
+		   Bank bank = new Bank();
+		   bank = populate();
 		   Client sender = bank.get_client("193022", "FIL2001");
-		   result = bank.transfer("999",bank.get_branch("FIL3001"),"194022", bank.get_branch("ATM3010"), sender.get_account);
+		   result = bank.transfer("999",bank.get_branch("FIL3001"),"194022", bank.get_branch("FIL2001"), sender.get_account);
 		   assertEquals("Sucess", result);
 	   }
-
+	   
+	   
 	   @Test
-	   public void test_withdraw()//testa saque
+	   public void test_transfer_julia_to_mario()
+	   {//julia to mario
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("194022", "FIL3001");
+		   result = bank.transfer("999",bank.get_branch("FIL2001"),"193022", bank.get_branch("FIL3001"), sender.get_account);
+		   assertEquals("Sucess", result);
+	   }
+	   
+	   
+	   @Test
+	   public void test_transfer_mario_fefe()
+	   {//mario to fefe
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("193022", "FIL2001");
+		   result = bank.transfer("999",bank.get_branch("FIL3001"),"195022", bank.get_branch("FIL3001"), sender.get_account);
+		   assertEquals("Sucess", result);
+	   }
+	   
+	   
+	   @Test
+	   public void test_transfer_fefe_to_mario()
+	   {//fefe to mario
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("195022", "FIL3001");
+		   result = bank.transfer("999",bank.get_branch("FIL2001"),"193022", bank.get_branch("FIL3001"), sender.get_account);
+		   assertEquals("Sucess", result);
+	   }
+	   	   
+	   @Test
+	   public void test_transfer_julia_to_fefe()
+	   {//julia to fefe
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("194022", "FIL3001");
+		   result = bank.transfer("999",bank.get_branch("FIL3001"),"195022", bank.get_branch("FIL3001"), sender.get_account);
+		   assertEquals("Sucess", result);
+	   }
+	   
+	   @Test
+	   public void test_transfer_fefe_to_julia()
+	   {//fefe to julia
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("195022", "FIL3001");
+		   result = bank.transfer("999",bank.get_branch("FIL3001"),"194022", bank.get_branch("FIL3001"), sender.get_account);
+		   assertEquals("Sucess", result);
+	   }
+	     
+	   
+	      
+	   //teste de saques
+	   
+	   @Test
+	   public void test_withdraw()//testa saque de mario
 	   {
 		   String result;
-		   Bank bank = populate();
-		   result = bank.withdraw("10",)
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("193022", "FIL2001");
+		   result = bank.withdraw("10",bank.get_branch("FIL2001"),sender.get_account);
 		   assertEquals("Get your money.\n", result);
 		   
 	   }
 	   @Test (expected = InvalidTransaction.class)
+	   public void test_withdraw()//testa saque invalido de mario
+	   {
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("193022", "FIL2001");
+		   result = bank.withdraw("-10",bank.get_branch("FIL2001"),sender.get_account);
+		   assertEquals("Get your money.\n", result);	   
+	   }
 	   
+	   public void test_withdraw()//testa saque de julia
+	   {
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("194022", "FIL3001");
+		   result = bank.withdraw("10",bank.get_branch("FIL3001"),sender.get_account);
+		   assertEquals("Get your money.\n", result);	   
+	   }
 	   
 	   @Test (expected = InvalidTransaction.class)
-	   public void test_invalid_deposit() throws InvalidTransaction
+	   public void test_withdraw()//testa saque invalido de julia
 	   {
-		   Bank bank = populate();
-		   //mario1 fez um deposito
-		   bank.deposit("-10", "1234", bank.get_branch("ATM"), );
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("194022", "FIL3001");
+		   result = bank.withdraw("-10",bank.get_branch("FIL3001"),sender.get_account);
+		   assertEquals("Get your money.\n", result);	   
 	   }
-	   @Test
-	   public void test_deposit() throws InvalidTransaction
+	   
+	   public void test_withdraw()//testa saque de fefe
 	   {
-		   Bank bank = populate();
-		   //mario1 fez um deposito
-		   bank.deposit("2310", "1234", bank.get_branch("ATM"), );
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("195022", "FIL3001");
+		   result = bank.withdraw("10",bank.get_branch("FIL3001"),sender.get_account);
+		   assertEquals("Get your money.\n", result);	   
+	   }
+	   
+	   public void test_withdraw()//testa saque invalido de fefe
+	   {
+		   String result;
+		   Bank bank = new Bank();
+		   bank = populate();
+		   Client sender = bank.get_client("195022", "FIL3001");
+		   result = bank.withdraw("-10",bank.get_branch("FIL3001"),sender.get_account);
+		   assertEquals("Get your money.\n", result);	   
 	   }
 	}
 
-}
