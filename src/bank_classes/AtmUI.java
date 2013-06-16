@@ -13,6 +13,14 @@ import bankexceptions.NotFoundException;
 //
 
 public class AtmUI extends UI {
+	MenuOptions[] LOGGED_MENU_OPTIONS = {MenuOptions.LOGOUT, 
+			   MenuOptions.BALANCE, 
+			   MenuOptions.BRANCH, 
+			   MenuOptions.DEPOSIT,
+			   MenuOptions.HISTORY,
+			   MenuOptions.TRANSFER,
+			   };
+
 	public AtmUI(Bank bank, Branch branch){
 		super(bank, branch);
 	}

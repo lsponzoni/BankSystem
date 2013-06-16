@@ -18,6 +18,7 @@ import java.util.Scanner;
 import bankexceptions.NotFoundException;
 
 public abstract class UI {
+	private static final String SELECT_ONE_FROM_BELLOW_LIST = "Escolha uma opção abaixo";
 	private static final String USER_NOT_FOUND = "Usuário não encontrado!";
 	private static final String WRONG_PASSWORD = "Senha incorreta!";
 	private static final String LOGIN_OK = "Login realizado.";
@@ -50,7 +51,7 @@ public abstract class UI {
 		return input;
 	}
 
-	public static boolean yes_or_no(String yes_or_no){
+	private static boolean yes_or_no(String yes_or_no){
 		return (yes_or_no.toLowerCase().startsWith("y"));
 	}
 
@@ -69,10 +70,6 @@ public abstract class UI {
 		logged_in = confirm("logout");
 		disable_operations();
 		return "Operação Finalizada";
-	}
-	
-	public void operation_result(String effects){
-		display(effects);
 	}
 
 	protected abstract User exist_at_system(String username,String branch);
@@ -94,13 +91,19 @@ public abstract class UI {
 
 
 	private void disable_operations() {
-		System.out.println(CLEAR_SCREEN);
+		display(CLEAR_SCREEN);
 	}
-
+	private MenuOptions[] get_unlogged_menu_options{
+		MenuOptions[] restrictions = {
+					MenuOptions.LOGIN,
+					MenuOptions.
+					}
+		return restrictions;
+	}
+	
 	public boolean isLoggedIn() {
 		return logged_in;
 	}
-
 
 	private void enable_financial_functions() {
 		String answer;
@@ -163,30 +166,55 @@ public abstract class UI {
 
 	public void unlogged_menu_loop(){
 		while(isSystemOn()){
-			user_interaction(UNLOGGED_MENU_OPTIONS);
+			user_interaction();
 		}
 	}
-	MenuOptions get_next_operation(Restrict options){
-		// question about a menu printing all the options in menu
-			// TODO desire MenuOptions to string lists the options
-		// verify if the user answer is in option
-	}
-	String execute(MenuOptions t){
-		switch(t){
-		//case :
+	char get_next_operation(MenuOptions[] restricted_to_options){
+		String input;
+		char op_value;
 		
+		do {
+			String menu = MenuOptions.menu(SELECT_ONE_FROM_BELLOW_LIST, restricted_to_options);
+			input = get_string(menu);
+			op_value = input.toUpperCase().charAt(0);
+		}while(! MenuOptions.validOption(op_value,restricted_to_options));
+		
+		return op_value;
+	}
+	public String execute(char optCode){
+		String message = "";
+		if(MenuOptions.ATM.compare(optCode)){
+		} else if(MenuOptions.BALANCE.compare(optCode)){
+
+		} else if(MenuOptions.BRANCH.compare(optCode)){
+
+		} else if(MenuOptions.DEPOSIT.compare(optCode)){
+		} else if(MenuOptions.EXIT.compare(optCode)){
+
+		} else if(MenuOptions.EXIT_ALL.compare(optCode)){
+		} else if(MenuOptions.HISTORY.compare(optCode)){
+
+		} else if(MenuOptions.LOGIN.compare(optCode)){
+			//message = login();
+		} else if(MenuOptions.LOGOUT.compare(optCode)){
+			message = logout();
+		} else if(MenuOptions.NEW_ACCOUNT.compare(optCode)){
+		} else if(MenuOptions.TRANSFER.compare(optCode)){
+		} else if(MenuOptions.WITHDRAW.compare(optCode)){
+		} else {
+			message = "No op matches.";
 		}
-		return "";
+		return message;
 	}
 	public void logged_menu_loop(){
-		// TODO desire to have a new class 
-		// logged_menu_options = new MenuOptions(permitted_function_set, permitted_function_string) 
 		while(isLoggedIn()){
-			user_interaction(LOGGED_MENU_OPTIONS);
+			user_interaction(get_logged_menu_options());
 		}
 	}
-	private void user_interaction(Restrict options){
-		MenuOptions operation_id = get_next_operation(options);
+	protected abstract MenuOptions[] get_logged_menu_options();
+
+	private void user_interaction(MenuOptions[] restrict_to_options){
+		char operation_id = get_next_operation(restrict_to_options);
 		String execution_result = execute(operation_id);
 		display(execution_result);
 	}

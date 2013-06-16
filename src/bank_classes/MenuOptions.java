@@ -1,51 +1,70 @@
 package bank_classes;
 
 public enum MenuOptions {
-	LOGIN(1,'L', "Login"), 
-	LOGOUT(2,'O', "Logout"),
-	EXIT(3,'D', "Desligar"),
+	LOGIN('L', "Login"), 
+	LOGOUT('O', "Logout"),
+	EXIT('D', "Desligar"),
 	
-	NEW_ACCOUNT(4,'N',"Nova conta"),
-	
-	TRANSFER(5,'T', "Transferir"),
-	DEPOSIT(6,'D', "Depósito"),
-	WITHDRAW(7,'W', "Retirada"),
+	NEW_ACCOUNT('N',"Nova conta"),
 
-	BRANCH(8,'B', "Menu Agência"),
-	ATM(9,'C', "Caixa Eletrônico"),
-	EXIT_ALL(10,'E',"Bank Shutdown");
+	BALANCE('S', "Saldo"),
+	HISTORY('H', "Extrato"),
+	TRANSFER('T', "Transferir"),
+	DEPOSIT('D', "Depósito"),
+	WITHDRAW('W', "Retirada"),
 
-	private final char id_letter;
-	private final int  id_value;
+	BRANCH('A', "Menu Agência"),
+	ATM('C', "Caixa Eletrônico"),
+	EXIT_ALL('E',"Bank Shutdown");
+
+	private final char c;
 	private final String  option_name;
 	
-	MenuOptions(int index,char option_char, String option_name){
-		this.id_value = index;
-		this.id_letter = option_char;
+	MenuOptions(char option_char, String option_name){
+		this.c = option_char;
 		this.option_name = option_name;
 	}
 	
-	public int int_id(){
-		return id_value;
+	public final char char_id(){
+		return c; 
 	}
 
-	public char char_id(){
-		return id_letter; 
-	}
-	
-	public String option_line(){
+	public final String option_line(){
 		return option_name;
 	}
 
-	public static String menu_entry_string(MenuOptions t){
-		return t.char_id() + ":" + t.option_line() + "\n";
+	public final boolean compare(char c){
+		return this.c == c;
 	}
 	
-	public static String menu(MenuOptions[] o){
-		StringBuilder s = new StringBuilder("Select");
+	public static String menu_entry_string(MenuOptions t){
+		return t.char_id() + "> " + t.option_line() + "\n";
+	}
+	
+	public static boolean validOption(String op, MenuOptions[] o){
+		char option_value = op.toLowerCase().charAt(0);
 		for(MenuOptions t: o){
-			s.append(menu_entry_string(t));
+			if(option_value == t.char_id()){
+				return true;
+			}
 		}
+		return false;
+	}
+
+	public static boolean validOption(char option_value, MenuOptions[] restrict){
+		for(MenuOptions t: restrict){
+			if(option_value == t.char_id()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static String menu(String header,MenuOptions[] restrict){
+		StringBuilder s = new StringBuilder(header);
+		for(MenuOptions t: restrict){
+			s.append(menu_entry_string(t));
+		}	
 		return s.toString();
 	}
 }

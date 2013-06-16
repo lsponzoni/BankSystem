@@ -37,15 +37,7 @@ public class BranchUI extends UI {
 	}
 
 	public String enable_management_functions() {
-		return "Escolha uma operação: \n" +
-				"1> Impressão saldo \n" +
-				"2> Extrato \n" +
-				"3> Depósito \n" +
-				"4> Saque \n" +
-				"5> Transferência \n" +
-				"6> Criar nova conta \n" +
-				"7> Logout de "+ current_user.getUsername();
-
+		return 
 	}
 
 	public String login(String username, String password) {
