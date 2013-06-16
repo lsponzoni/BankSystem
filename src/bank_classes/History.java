@@ -50,7 +50,7 @@ public class History {
 	
 
 
-	public History get_transactions(Date from, Date to) throws InvalidTransaction {
+	public History get_transactions(Calendar from, Calendar to) throws InvalidTransaction {
 		History only_inside_interval_transactions = new History();
 		for(Withdrawal each: withdraw_list){
 			if(each.in_time_period(from, to)){
