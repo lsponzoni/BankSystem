@@ -26,7 +26,7 @@ public class Deposit extends Transaction {
 		this.cashParcelCode = cashParcelCode;
 	}
 	
-	public Deposit(String acc_code, String access_branch_code, Money value, String cashParcelCode, Date date) {
+	public Deposit(String acc_code, String access_branch_code, Money value, String cashParcelCode, Calendar date) {
 		super(acc_code, access_branch_code, date, value);
 		this.cashParcelCode = cashParcelCode;
 	}
