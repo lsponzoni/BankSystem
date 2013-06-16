@@ -4,6 +4,12 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import bank_classes.Account;
 import bank_classes.AtmUI;
 import bank_classes.Bank;
@@ -18,9 +24,7 @@ import bank_classes.User;
 
 public class SystemTest {
 
-	/**
-	 * @param args
-	 */
+	
 	public static Bank populate(){
 		// Create the bank 
 		Bank b = new Bank();
@@ -36,13 +40,13 @@ public class SystemTest {
 		born_at.set(Calendar.MONTH, 11); // 11 = december
 		born_at.set(Calendar.DAY_OF_MONTH, 24); // christmas eve
 		
-//		Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario");
+        Client mario =  new Client("Mario","Brother",born_at,"193022","It's me Mario");
 		Client julia =  new Client("Julia","Ana",born_at,"194022","I am not mario","114929803");
 		Client fefe =  new Client("FE","FE",born_at,"195022","I am not mario also","1110821529");
 
 		List<User> clients_br1 = new ArrayList<User>();
 
-//		clients_br1.add(mario);
+        clients_br1.add(mario);
 		
 		List<User> clients_br2 = new ArrayList<User>();
 
@@ -56,9 +60,9 @@ public class SystemTest {
 		List<User> clerks_br2 = new ArrayList<User>();
 		Clerk mario3 = new Clerk("Super","Mario",born_at,"3022","So many marios.");
 		clerks_br2.add(mario3);
-		clerks_br2.add(mario3);
+	    
 		
-		Branch br1 = new Branch("FIL2001","Filial Rua Cear√°",clients_br1, clerks_br1);
+		Branch br1 = new Branch("FIL2001","Filial Rua Cear·°",clients_br1, clerks_br1);
 		Branch br2 = new Branch("FIL3001","Filial Rua Anchieta",clients_br2, clerks_br2);
 
 		
@@ -68,36 +72,60 @@ public class SystemTest {
 		b.add_branch(br1);
 		b.add_branch(br2);
 
-		// Create a few accounts
-		// Account(String account_code, String branch_code, Money initial_balance)
-		Money m1 = new Money(1991);
-		Money m2 = new Money(19091);
-		Money m3 = new Money(19031);
-
-//		Account mario_account = new Account(mario.get_account_id(),br1.get_code(),m1);
-//		Account julia_account = new Account(julia.get_account_id(),br2.get_code(),m2);
-//		Account fefe_account = new Account(fefe.get_account_id(),br2.get_code(),m3);
-		
-//		b.add_account(mario_account);
-//		b.add_account(julia_account);
-//		b.add_account(fefe_account);
-		// How to add the accounts to the system?
-		// For now system accounts are going to be appended to client owner
-		// or at least, it is what i believe will happen 
 		return b;
 	}
-	public static void main(String[] args) {
-	   Bank bank = populate();
-	   Branch b = new Branch("12313", "123213");
-//	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
-//	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
-//	   //UI.main_loop(); 
-//	   Client client = only_clerk_use.client_dataform();
-//	   Money initial_balance = only_clerk_use.money_dataform();
-//	   only_clerk_use.add_new_account_to_system(client, initial_balance);
+	
 	   
-	   UI ui = new UI(bank, b);
-	   ui.menu();
+      
+	   @Test (expected = DuplicateException.class)
+	   public void duplicated_account() throws DuplicateException
+	   {
+		   Bank bank = populate();
+		   bank.add_client_account(bank.get_branch("FIL2001"), bank.get_client("193022","ATM2009"),"1000");
+	   }
+	   @Test (expected = DuplicateException.class)
+	   public void duplicated_clerks() throws DuplicateException
+	   {
+		   Clerk clerk_test = new Clerk("Mario","Mario",born_at,"193022","It's me Mario");//cleark mario
+		   Bank bank = populate();
+		   add_clerk_account(bank.get_branch("FIL2001"),clerk_test);//tries to add an existing client
+	   }
+	   @Test
+	   public void test_transfer()//testa se transferiu
+	   {
+		   String result;
+		   Bank bank = populate();
+		   Client sender = bank.get_client("193022", "FIL2001");
+		   result = bank.transfer("999",bank.get_branch("FIL3001"),"194022", bank.get_branch("ATM3010"), sender.get_account);
+		   assertEquals("Sucess", result);
+	   }
+
+	   @Test
+	   public void test_withdraw()//testa saque
+	   {
+		   String result;
+		   Bank bank = populate();
+		   result = bank.withdraw("10",)
+		   assertEquals("Get your money.\n", result);
+		   
+	   }
+	   @Test (expected = InvalidTransaction.class)
+	   
+	   
+	   @Test (expected = InvalidTransaction.class)
+	   public void test_invalid_deposit() throws InvalidTransaction
+	   {
+		   Bank bank = populate();
+		   //mario1 fez um deposito
+		   bank.deposit("-10", "1234", bank.get_branch("ATM"), );
+	   }
+	   @Test
+	   public void test_deposit() throws InvalidTransaction
+	   {
+		   Bank bank = populate();
+		   //mario1 fez um deposito
+		   bank.deposit("2310", "1234", bank.get_branch("ATM"), );
+	   }
 	}
 
 }

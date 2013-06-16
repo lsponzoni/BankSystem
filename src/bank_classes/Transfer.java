@@ -42,11 +42,11 @@ public class Transfer extends Transaction {
 								 from.get_account_code(), from.get_branch_code());
 	}
 	
-	public static String execute_transfer(Branch gate, Money ammount, Account from, Account to) throws InvalidTransaction {
+	public static String execute_transfer(Branch origin, Money ammount, Account from, Account to) throws InvalidTransaction {
 		Date date = new Date();
 		
-		Transfer f = newTransfer(TransferRole.SEND, gate, ammount,date, from, to);
-		Transfer t = newTransfer(TransferRole.RECEIVE, gate, ammount,date, from, to);
+		Transfer f = newTransfer(TransferRole.SEND, origin, ammount,date, from, to);
+		Transfer t = newTransfer(TransferRole.RECEIVE, origin, ammount,date, from, to);
 		
 		from.add_to_history(f);
 		to.add_to_history(t);
