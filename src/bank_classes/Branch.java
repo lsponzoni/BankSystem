@@ -109,6 +109,9 @@ public class Branch {
 		add_user(clerks,clerk);
 	}
 
+	public String string_branch_entry(){
+		return this.get_code() + " :: " + this.get_name() + "\n";
+	}
 	public String toString(){
 		String s;
 		s = "Branch: "+ name +  "\n" +

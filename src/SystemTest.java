@@ -57,7 +57,7 @@ public class SystemTest {
 		Clerk mario3 = new Clerk("Super","Mario",born_at,"3022","So many marios.");
 		clerks_br2.add(mario3);
 		clerks_br2.add(mario3);
-		
+
 		Branch br1 = new Branch("FIL2001","Filial Rua Ceará",clients_br1, clerks_br1);
 		Branch br2 = new Branch("FIL3001","Filial Rua Anchieta",clients_br2, clerks_br2);
 
@@ -88,16 +88,14 @@ public class SystemTest {
 	}
 	public static void main(String[] args) {
 	   Bank bank = populate();
-	   Branch b = new Branch("12313", "123213");
 //	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
 //	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
 //	   //UI.main_loop(); 
 //	   Client client = only_clerk_use.client_dataform();
 //	   Money initial_balance = only_clerk_use.money_dataform();
 //	   only_clerk_use.add_new_account_to_system(client, initial_balance);
-	   
-	   UI ui = new UI(bank, b);
-	   ui.menu();
+	   SystemUI sistema_bancario = new SystemUI(bank);
+	   sistema_bancario.
 	}
 
 }

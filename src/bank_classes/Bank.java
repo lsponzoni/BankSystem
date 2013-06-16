@@ -1,5 +1,6 @@
 package bank_classes;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import bankexceptions.DuplicateException;
@@ -8,8 +9,14 @@ import bankexceptions.NotFoundException;
 
 public class Bank {
 	private int next_account_number;
-	public Collection<Branch> branches;
+	private Collection<Branch> branches, atms;
 	
+	public Bank(){
+		next_account_number = 11111;
+		atms = new ArrayList<Branch>(10);
+		branches = new ArrayList<Branch>(10);
+	}
+
 	public Branch get_branch(String branch_code) throws NotFoundException{
 		for(Branch each: branches){
 			if (each.code_match(branch_code))
@@ -38,7 +45,11 @@ public class Bank {
 	private void update_next_account_number(){
 		next_account_number += 1;
 	}
-	
+
+	public void add_atm(Branch branch) {
+		atms.add(branch);
+	}
+
 	public void add_branch(Branch branch) {
 		branches.add(branch);
 	}
@@ -79,9 +90,17 @@ public class Bank {
 		try{
 		Withdrawal w = new Withdrawal(acc,gate, withdraw_ammount);
 		acc.add_to_history(w);
-		return "Get your money.\n";
+		return "Get the money.\n";
 		} catch(InvalidTransaction e){
 			return e.toString();
+		}
+	}
+	
+	public String elements
+	public String print_atms(Collection<Branch> branches){
+		String builder
+		for (Branch branch : branches){
+			
 		}
 	}
 }

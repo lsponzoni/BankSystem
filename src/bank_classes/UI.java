@@ -72,7 +72,8 @@ public abstract class UI {
 		return "Operação Finalizada";
 	}
 
-	protected abstract User exist_at_system(String username,String branch);
+	protected abstract User exist_at_system(String username,String branch) throws NotFoundException;
+	
 	protected String login(String username, String branch, String password) {
 		String msg;
 		try{
@@ -93,65 +94,13 @@ public abstract class UI {
 	private void disable_operations() {
 		display(CLEAR_SCREEN);
 	}
-	private MenuOptions[] get_unlogged_menu_options{
-		MenuOptions[] restrictions = {
-					MenuOptions.LOGIN,
-					MenuOptions.
-					}
+	private MenuOptions[] get_unlogged_menu_options(){
+		MenuOptions[] restrictions = { MenuOptions.LOGIN, MenuOptions.EXIT };
 		return restrictions;
 	}
 	
 	public boolean isLoggedIn() {
 		return logged_in;
-	}
-
-	private void enable_financial_functions() {
-		String answer;
-		String menu =  "Escolha uma operação: \n" +
-				"I> Impressão saldo \n" +
-				"2> Extrato \n" +
-				"3> Depósito \n" +
-				"4> Saque \n" +
-				"5> Transferência \n" +
-				"6> Logout de "+ current_user.getUsername();
-		do {
-			answer = get_string(menu);
-			operation_result(CLEAR_SCREEN);	
-		}while(!menuOptionsClient.validOption(answer));
-	}
-
-	public void menu(){
-		String resposta;
-		String username;
-		String pass;
-		String msg = "Bem vindo ao WAND Bank System. \n" +
-				"Escolha uma operação: \n" +
-				"1> Login \n" +
-				"2> Sair";
-		String loginUser = "Digite o nome de usuário: \n";
-		String passwUser = "Digite sua senha: \n";
-
-		do {
-
-			operation_result(msg);
-			resposta = get_string(PROMPT);
-			operation_result(CLEAR_SCREEN);
-
-		}while(!resposta.equals("1") || !resposta.equals("2"));
-
-		if(resposta.equals("1"))
-		{
-			operation_result(loginUser);
-			username = get_string(PROMPT);
-			operation_result(passwUser);
-			pass = get_string(PROMPT);
-			operation_result(CLEAR_SCREEN);
-			login(username, this.access_branch.get_code(), pass);
-			if (isLoggedIn())
-			{
-				enable_financial_functions();
-			}
-		}
 	}
 
 	public String deposit() {
