@@ -11,6 +11,7 @@ import bankexceptions.InvalidTransaction;
 //  @ Author : 
 //
 //
+import bankexceptions.NotFoundException;
 
 public class BranchUI extends UI {
 	public BranchUI(Bank bank, Branch branch) {
@@ -18,6 +19,10 @@ public class BranchUI extends UI {
 		super(bank,branch);
 	}
 
+	protected User exist_at_system(String username,String branch) throws NotFoundException{
+		access_branch.get_clerk(username);
+	}
+	
 	public String add_new_account_to_system(Client client, String initial_balance) {
 		// ignore how hard it is to create the client out there
 		String client_id, branch_id;

@@ -17,68 +17,91 @@ import java.util.Scanner;
 
 import bankexceptions.NotFoundException;
 
-public class UI {
+public abstract class UI {
+	private static final String USER_NOT_FOUND = "Usuário não encontrado!";
+	private static final String WRONG_PASSWORD = "Senha incorreta!";
+	private static final String LOGIN_OK = "Login realizado.";
+	private static final String Y_OR_N_PREFFIX_WORD_REGEX = "[YyNn].*";
+	private static final String CONFIRM_PREFFIX = "Do you really want to ";
 	private static final String PROMPT = "\n=> ";
 	private static final String CLEAR_SCREEN = "\000C";
 	protected boolean logged_in;
 	protected User current_user;
 	protected Branch access_branch;
 	protected Bank facade;
-	
+
 	public UI(Bank bank, Branch branch) {
 		// Bank and branch data addition
 		this.access_branch = branch;
 		this.facade = bank;
 	}
-	
+	// raw input output
+	// this method should be overriden for GUI implementations
+	public void display(String message){
+		System.out.println(message);		
+	}
 	public  String get_string(String question){
-		// raw input output
 		InputStreamReader cin = new InputStreamReader(System.in);
 		Scanner in = new Scanner(cin);
-		System.out.println(question);
+		display(question);
+		display(PROMPT);
 		String input = in.nextLine();
 		in.close();
 		return input;
 	}
-	
-	public void operation_result(String effects){
-		System.out.println(effects);
+
+	public static boolean yes_or_no(String yes_or_no){
+		return (yes_or_no.toLowerCase().startsWith("y"));
 	}
-	
-	protected String login(String username, String branch, String password) {
-		String msg;
-		try{
-			current_user = this.facade.get_client(username, branch);
-			if(current_user.passwordMatch(password))
-			{
-				logged_in = true;
-				msg = "Login realizado.";
-				
-			}
-			else{
-				msg = "Senha incorreta!";
-			}
-		}catch(NotFoundException excep){
-			msg = "Usuário não encontrado!";
-		}
-		return msg;
+
+	public boolean confirm(String question){
+		boolean valid_answer,answer;
+		String input = "y";		
+		do{
+			input = get_string(CONFIRM_PREFFIX + question);
+			valid_answer = input.matches(Y_OR_N_PREFFIX_WORD_REGEX);
+		}while(!valid_answer);
+		answer = yes_or_no(input);
+		return answer;
 	}
-	
+
 	protected String logout() {
-		logged_in = false;
+		logged_in = confirm("logout");
 		disable_operations();
 		return "Operação Finalizada";
 	}
 	
+	public void operation_result(String effects){
+		display(effects);
+	}
+
+	protected abstract User exist_at_system(String username,String branch);
+	protected String login(String username, String branch, String password) {
+		String msg;
+		try{
+			current_user = exist_at_system(username, branch);
+			if(current_user.passwordMatch(password)) {
+				logged_in = true;
+				msg = LOGIN_OK;
+			} else {
+				msg = WRONG_PASSWORD;
+			}
+		}catch(NotFoundException excep){
+			msg = USER_NOT_FOUND;
+		}
+		return msg;
+	}
+
+
 	private void disable_operations() {
 		System.out.println(CLEAR_SCREEN);
 	}
-	
+
 	public boolean isLoggedIn() {
 		return logged_in;
 	}
 
-	
+
 	private void enable_financial_functions() {
 		String answer;
 		String menu =  "Escolha uma operação: \n" +
@@ -89,33 +112,30 @@ public class UI {
 				"5> Transferência \n" +
 				"6> Logout de "+ current_user.getUsername();
 		do {
-			operation_result(menu);
-			answer = get_string(PROMPT);
+			answer = get_string(menu);
 			operation_result(CLEAR_SCREEN);	
 		}while(!menuOptionsClient.validOption(answer));
-		
-		
 	}
-	
+
 	public void menu(){
 		String resposta;
 		String username;
 		String pass;
 		String msg = "Bem vindo ao WAND Bank System. \n" +
-			   "Escolha uma operação: \n" +
+				"Escolha uma operação: \n" +
 				"1> Login \n" +
 				"2> Sair";
 		String loginUser = "Digite o nome de usuário: \n";
 		String passwUser = "Digite sua senha: \n";
-		
+
 		do {
-			
+
 			operation_result(msg);
 			resposta = get_string(PROMPT);
 			operation_result(CLEAR_SCREEN);
-			
+
 		}while(!resposta.equals("1") || !resposta.equals("2"));
-		
+
 		if(resposta.equals("1"))
 		{
 			operation_result(loginUser);
@@ -130,37 +150,65 @@ public class UI {
 			}
 		}
 	}
-	
+
 	public String deposit() {
 		return "Not implemented!";
-	
+
 	}
-	
+
 	public String withdraw(Number ammount, Client holder) {
 		return "";
-	
+
 	}
-	
+
+	public void unlogged_menu_loop(){
+		while(isSystemOn()){
+			user_interaction(UNLOGGED_MENU_OPTIONS);
+		}
+	}
+	int get_next_operation(MenuOptions operations){
+		// question about a menu printing all the options in menu
+			// TODO desire MenuOptions to string lists the options
+		// verify if the user answer is in option
+	}
+	execute(int t){
+		switch(t){
+		case MLOGIN:
+		
+		}
+	}
+	public void logged_menu_loop(){
+		// TODO desire to have a new class 
+		// logged_menu_options = new MenuOptions(permitted_function_set, permitted_function_string) 
+		while(isLoggedIn()){
+			user_interaction(LOGGED_MENU_OPTIONS);
+		}
+	}
+	private void user_interaction(options){
+		operation_id = get_next_operation(logged_menu_options);
+		execution_result = execute(operation_id);
+		display(execution_result);
+	}
 	public String transfer() {
 		return "";
 	}
-	
+
 	public void get_period_from_user() {
-	    //TODO this is not void
+		//TODO this is not void
 	}
-	
+
 	public void get_month_from_user() {
 		//TODO this is not void
 	}
-	
+
 	private String transaction_history() {
 		return "";
 	}
-		
+
 	public String transaction_history_to_print() {
 		return "";
 	}
-	
+
 	public String balance(Client holder) {
 		return "";
 	}
