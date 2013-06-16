@@ -105,7 +105,7 @@ public abstract class UI {
 	private void enable_financial_functions() {
 		String answer;
 		String menu =  "Escolha uma operação: \n" +
-				"1> Impressão saldo \n" +
+				"I> Impressão saldo \n" +
 				"2> Extrato \n" +
 				"3> Depósito \n" +
 				"4> Saque \n" +
@@ -166,16 +166,17 @@ public abstract class UI {
 			user_interaction(UNLOGGED_MENU_OPTIONS);
 		}
 	}
-	int get_next_operation(MenuOptions operations){
+	MenuOptions get_next_operation(Restrict options){
 		// question about a menu printing all the options in menu
 			// TODO desire MenuOptions to string lists the options
 		// verify if the user answer is in option
 	}
-	execute(int t){
+	String execute(MenuOptions t){
 		switch(t){
-		case MLOGIN:
+		//case :
 		
 		}
+		return "";
 	}
 	public void logged_menu_loop(){
 		// TODO desire to have a new class 
@@ -184,9 +185,9 @@ public abstract class UI {
 			user_interaction(LOGGED_MENU_OPTIONS);
 		}
 	}
-	private void user_interaction(options){
-		operation_id = get_next_operation(logged_menu_options);
-		execution_result = execute(operation_id);
+	private void user_interaction(Restrict options){
+		MenuOptions operation_id = get_next_operation(options);
+		String execution_result = execute(operation_id);
 		display(execution_result);
 	}
 	public String transfer() {
