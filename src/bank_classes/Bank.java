@@ -17,13 +17,21 @@ public class Bank {
 		branches = new ArrayList<Branch>(10);
 	}
 
-	public Branch get_branch(String branch_code) throws NotFoundException{
+	private Branch query_branch(String branch_code, Collection<Branch> b)  throws NotFoundException{
 		for(Branch each: branches){
 			if (each.code_match(branch_code))
 				return each;
 		}
 		throw new NotFoundException(branch_code);
 	}
+	public Branch get_branch(String branch_code) throws NotFoundException{
+		return query_branch(branch_code, branches);
+	}
+
+	public Branch get_atm(String branch_code) throws NotFoundException {
+		return query_branch(branch_code, atms);
+	}
+
 
 	public Client get_client(String client_username, String branch_id) throws NotFoundException {
 		Branch branch;
@@ -96,11 +104,20 @@ public class Bank {
 		}
 	}
 	
-	public String elements
-	public String print_atms(Collection<Branch> branches){
-		String builder
+	public String list_branches(Collection<Branch> branches){
+		StringBuilder list = new StringBuilder();
 		for (Branch branch : branches){
-			
+			list.append( branch.string_branch_entry());
 		}
+		return list.toString();
 	}
+
+	public String list_branches_with_data(){
+		return list_branches(branches);
+	}
+
+	public String list_all_atms(){
+		return list_branches(atms);
+	}
+
 }

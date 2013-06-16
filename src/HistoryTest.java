@@ -30,7 +30,6 @@ public class HistoryTest {
 
 	private static final Money m = new Money(1);
 
-	
 	@BeforeClass
 	public static void date_Order() throws InterruptedException, ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

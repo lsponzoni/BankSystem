@@ -132,16 +132,12 @@ public abstract class UI {
 	}
 	public String execute(char optCode){
 		String message = "";
-		if(MenuOptions.ATM.compare(optCode)){
-		} else if(MenuOptions.BALANCE.compare(optCode)){
-
-		} else if(MenuOptions.BRANCH.compare(optCode)){
+		if(MenuOptions.BALANCE.compare(optCode)){
 
 		} else if(MenuOptions.DEPOSIT.compare(optCode)){
 		} else if(MenuOptions.EXIT.compare(optCode)){
 
-		} else if(MenuOptions.EXIT_ALL.compare(optCode)){
-		} else if(MenuOptions.HISTORY.compare(optCode)){
+		}else if(MenuOptions.HISTORY.compare(optCode)){
 
 		} else if(MenuOptions.LOGIN.compare(optCode)){
 			//message = login();

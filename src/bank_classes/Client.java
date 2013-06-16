@@ -25,12 +25,6 @@ public class Client extends User {
 		this.account = acc;
 	}
 	
-	public Client(String name, String surname, Calendar birthday, String acc, String password, String cpf) {
-		super(name, surname, birthday, null, password);
-		this.cpf = cpf;
-		this.account = null;
-	}
-
 	public Client(String name, String surname, Calendar birthday, String cpf) {
 		super(name, surname, birthday, null, null);
 		this.cpf = cpf;

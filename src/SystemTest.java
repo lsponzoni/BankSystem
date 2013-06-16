@@ -88,14 +88,9 @@ public class SystemTest {
 	}
 	public static void main(String[] args) {
 	   Bank bank = populate();
-//	   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
-//	   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
-//	   //UI.main_loop(); 
-//	   Client client = only_clerk_use.client_dataform();
-//	   Money initial_balance = only_clerk_use.money_dataform();
-//	   only_clerk_use.add_new_account_to_system(client, initial_balance);
+	   
 	   SystemUI sistema_bancario = new SystemUI(bank);
-	   sistema_bancario.
+	   sistema_bancario.start();
 	}
 
 }

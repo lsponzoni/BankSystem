@@ -51,7 +51,7 @@ public class Withdrawal extends Transaction {
         return super.get_value().minus();
 	}
 	
-	public toString(){
+	public String toString(){
 		return "Withdrawal:" + super.toString() + "\n "; 
 	}
 }
