@@ -15,25 +15,25 @@ public class BankTest extends TestCase {
 	  @Test (expected = DuplicateException.class)
 	   public void duplicated_account_mario() throws DuplicateException, InvalidTransaction, NotFoundException
 	   {
-		   Bank bank = new Bank();
-		   bank = SystemTest.populate();
-		   bank.add_client_account(bank.get_branch("FIL2001"), bank.get_client("193022","FIL2001"),"1000");
+		   Bank bank1 = new Bank();
+		   bank1= SystemTest.populate();
+		   bank1.add_client_account(bank1.get_branch("FIL2001"), bank1.get_client("193022","FIL2001"),"1000");
 	   }
 	   
 	   @Test (expected = DuplicateException.class)
 	   public void duplicated_account_julia() throws DuplicateException, InvalidTransaction, NotFoundException
 	   {
-		   Bank bank = new Bank();
-		   bank = SystemTest.populate();
-		   bank.add_client_account(bank.get_branch("FIL3001"), bank.get_client("194022","FIL2001"),"1000");
+		   Bank bank2 = new Bank();
+		   bank2 = SystemTest.populate();
+		   bank2.add_client_account(bank2.get_branch("FIL3001"), bank2.get_client("194022","FIL2001"),"1000");
 	   }
 	   
 	   @Test (expected = DuplicateException.class)
 	   public void duplicated_account_fefe() throws DuplicateException, InvalidTransaction, NotFoundException
 	   {
-		   Bank bank = new Bank();
-		   bank = SystemTest.populate();
-		   bank.add_client_account(bank.get_branch("FIL3001"), bank.get_client("195022","FIL2001"),"1000");
+		   Bank bank3 = new Bank();
+		   bank3 = SystemTest.populate();
+		   bank3.add_client_account(bank3.get_branch("FIL3001"), bank3.get_client("195022","FIL2001"),"1000");
 	   }
 	   
 	   
