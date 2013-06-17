@@ -78,7 +78,6 @@ public class Bank {
 		}catch(DuplicateException e){
 			throw new DuplicateException("Trying to duplicate system info.");
 		}
-
 	}	
 	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) throws NotFoundException, InvalidTransaction{
 		Money transfer_ammount = new Money(ammount);

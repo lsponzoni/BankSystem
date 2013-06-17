@@ -17,6 +17,5 @@ public class Clerk extends User {
 	public Clerk(String name, String surname, Calendar birthday,
 			String username, String password) {
 		super(name, surname, birthday, username, password);
-		// TODO Auto-generated constructor stub
 	}
 }

@@ -61,7 +61,7 @@ public enum MenuOptions {
 	}
 
 	public static String menu(String header,MenuOptions[] restrict){
-		StringBuilder s = new StringBuilder(header);
+		StringBuilder s = new StringBuilder(header + "\n");
 		for(MenuOptions t: restrict){
 			s.append(menu_entry_string(t));
 		}	

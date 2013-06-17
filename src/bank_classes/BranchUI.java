@@ -1,5 +1,8 @@
 package bank_classes;
 
+import java.util.Calendar;
+
+import bankexceptions.DuplicateException;
 import bankexceptions.InvalidTransaction;
 //
 //
@@ -20,43 +23,62 @@ public class BranchUI extends UI {
 	}
 
 	protected User exist_at_system(String username,String branch) throws NotFoundException{
-		access_branch.get_clerk(username);
-	}
-	
-	public String add_new_account_to_system(Client client, String initial_balance) {
-		// ignore how hard it is to create the client out there
-		String client_id, branch_id;
-		Money balance; 
-		Account new_acc;
-		client_id = client.get_account_id();
-		branch_id = access_branch.get_code();
-		balance = new Money(initial_balance);
-		new_acc = new Account(client_id, branch_id, balance);
-		return "Success";
-
+		return access_branch.get_clerk(username);
 	}
 
-	public String enable_management_functions() {
-		return 
-	}
 
 	public String login(String username, String password) {
 		String msg;
 		try{
 			current_user = this.facade.get_clerk(username, access_branch.get_code());
-			if(current_user.passwordMatch(password))
-			{
-				logged_in = true;
+			if(current_user.passwordMatch(password)){
+				set_log_in();
 				msg = "Login realizado.";
-				
-			}
-			else{
+			} else{
 				msg = "Senha incorreta!";
 			}
 		}catch(NotFoundException excep){
 			msg = "Funcionário não encontrado.";
 		}
 		return msg;
+	}
 
+	public String add_new_account_to_system() {
+		Client client = create_new_client();
+		String initial_balance;
+		initial_balance = get_string("Quantia inicial: ");
+		try{
+			this.facade.add_client_account(access_branch, client, initial_balance);
+		} catch(InvalidTransaction e)	{
+			return INVALID_TRANSACTION;
+		} catch(DuplicateException e)	{
+			return "Conta duplicada!";
+		}
+		return "Successo.";
+	}
+
+	protected Client create_new_client() {
+		String name, surname, cpf;
+		display("Informe dos dados do novo cliente: ");
+		name = get_string("Nome: ");
+		surname = get_string("Sobrenome: ");
+		cpf = get_string("CPF: ");
+		Calendar bday = enter_birthday();
+		return new Client(name, surname, bday, cpf);
+	}
+	private Calendar enter_birthday() {
+		int day, month, year;
+		Calendar bday = Calendar.getInstance();
+		display("Informe a data de nascimento: ");
+		day = Integer.parseInt(get_string("Dia: "));
+		month = Integer.parseInt(get_string("Mes: "));
+		year = Integer.parseInt(get_string("Ano: "));
+		bday.set(year, month, day);
+		return bday;
+	}
+	@Override
+	protected MenuOptions[] get_logged_menu_options() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
