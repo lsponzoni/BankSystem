@@ -1,7 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
+import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,13 +10,13 @@ import bank_classes.TransferRole;
 
 
 public class TransferTest {
-	Date time_stamp;
+	Calendar time_stamp;
 	Money m;
 	String acc_to, br_to, acc_from, br_from; 
 
 	@Before
 	public void setUp() throws Exception {
-		time_stamp = new Date(); 
+		time_stamp = Calendar.getInstance(); 
 		m = new Money(111);
 		acc_to = "account code to";
 		br_to = "branch code to";

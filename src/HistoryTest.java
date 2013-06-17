@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
@@ -24,18 +25,24 @@ import bankexceptions.InvalidTransaction;
  
 public class HistoryTest {
 	History h;
-	static Date first_date;
-	static Date second_date;
-	static Date third_date;
+	static Calendar first_date;
+	static Calendar second_date;
+	static Calendar third_date;
 
 	private static final Money m = new Money(1);
 
 	@BeforeClass
 	public static void date_Order() throws InterruptedException, ParseException{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    	first_date = sdf.parse("2009-12-31");
-    	second_date = sdf.parse("2010-01-31");
-    	third_date = sdf.parse("2019-12-31");
+
+    	first_date.set(Calendar.YEAR,2009);
+    	first_date.set(Calendar.MONTH,11);
+    	first_date.set(Calendar.DAY_OF_MONTH,31);
+    	second_date.set(Calendar.YEAR,2010);
+    	second_date.set(Calendar.MONTH,0);
+    	second_date.set(Calendar.DAY_OF_MONTH,31);
+    	third_date.set(Calendar.YEAR,2019);
+    	third_date.set(Calendar.MONTH,11);
+    	third_date.set(Calendar.DAY_OF_MONTH,31);    	
 	}
 	@Before
 	public void setUp() throws Exception {

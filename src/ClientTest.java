@@ -1,8 +1,6 @@
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,7 +31,7 @@ public class ClientTest {
 
 	@Test (expected = InvalidTransaction.class)
 	public void before_adding_account_dont_add_transactions() throws InvalidTransaction, DuplicateException {
-		c.add_transaction(new Transaction("","",new Date(),new Money(0)));
+		c.add_transaction(new Transaction("","",Calendar.getInstance(),new Money(0)));
 		
 	}
 

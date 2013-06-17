@@ -84,8 +84,8 @@ public class SystemTest {
 		catch(Exception e){
 			System.out.println("Error at load from data base.");
 		}
-		SystemUI sistema_bancario = new SystemUI(bank);
-		sistema_bancario.start();
+	//	SystemUI sistema_bancario = new SystemUI(bank);
+	//	sistema_bancario.start();
 	}
 
 }

@@ -1,5 +1,6 @@
 package bank_classes;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -17,11 +18,11 @@ import java.util.Date;
 
 public class Transaction {
 	private String gate_branch_code;
-	private Date time_stamp;
+	private Calendar time_stamp;
 	private Money value;
 	protected String this_acc_code;
 
-	public Transaction(String this_acc_code, String location_access_branch_code, Date date, Money value){
+	public Transaction(String this_acc_code, String location_access_branch_code, Calendar date, Money value){
 		this.gate_branch_code = location_access_branch_code;
 		this.time_stamp = date;
 		this.value = value;
@@ -30,7 +31,7 @@ public class Transaction {
 
 	public Transaction(String this_acc_code, String location_access_branch_code, Money value){
 		this.gate_branch_code = location_access_branch_code;
-		this.time_stamp = new Date();
+		this.time_stamp = Calendar.getInstance();
 		this.value = value;
 		this.this_acc_code = this_acc_code;
 	}
@@ -40,19 +41,19 @@ public class Transaction {
           return value;
 	}
 
-	public Date get_date() {
+	public Calendar get_date() {
           return time_stamp;
 	}
 
-	public boolean newer_than(Date time) {
-           return time_stamp.before(time);
+	public boolean newer_than(Calendar to) {
+           return time_stamp.before(to);
 	}
 
-	public boolean older_than(Date time) {
-           return time_stamp.after(time);
+	public boolean older_than(Calendar from) {
+           return time_stamp.after(from);
 	}
 
-	public boolean in_time_period(Date from, Date to) {
+	public boolean in_time_period(Calendar from, Calendar to) {
            return older_than(from) && newer_than(to);     
 	}
 	

@@ -1,5 +1,6 @@
 package bank_classes;
 
+import java.util.Calendar;
 import java.util.Date;
 //
 //
@@ -11,6 +12,7 @@ import java.util.Date;
 //  @ Author : 
 //
 //
+
 
 import bankexceptions.InvalidTransaction;
 
@@ -24,7 +26,7 @@ public class Transfer extends Transaction {
 	public Transfer( 
 			 TransferRole r,
 			 String gate_branch_code, 
-			 Date date, 
+			 Calendar date, 
 			 Money value,
 			 String to_acc_code, String to_branch_code, 
 			 String from_acc_code,String from_branch_code) {
@@ -36,14 +38,14 @@ public class Transfer extends Transaction {
 		this.from_branch_code = from_branch_code;		
 	}	
 
-	public static Transfer newTransfer(TransferRole r, Branch gate, Money value, Date date, Account to, Account from) {
+	public static Transfer newTransfer(TransferRole r, Branch gate, Money value, Calendar date, Account to, Account from) {
 			return new Transfer( r, gate.get_code(), date, value,
 								 to.get_account_code(), to.get_branch_code(), 
 								 from.get_account_code(), from.get_branch_code());
 	}
 	
 	public static String execute_transfer(Branch origin, Money ammount, Account from, Account to) throws InvalidTransaction {
-		Date date = new Date();
+		Calendar date = Calendar.getInstance();
 		
 		Transfer f = newTransfer(TransferRole.SEND, origin, ammount,date, from, to);
 		Transfer t = newTransfer(TransferRole.RECEIVE, origin, ammount,date, from, to);
