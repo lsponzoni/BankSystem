@@ -25,7 +25,7 @@ public class BankTest extends TestCase {
 	   {
 		   Bank bank2 = new Bank();
 		   bank2 = SystemTest.populate();
-		   bank2.add_client_account(bank2.get_branch("FIL3001"), bank2.get_client("194022","FIL2001"),"1000");
+		   bank2.add_client_account(bank2.get_branch("FIL3001"), bank2.get_client("194022","FIL3001"),"1000");
 	   }
 	   
 	   @Test (expected = DuplicateException.class)
@@ -33,7 +33,7 @@ public class BankTest extends TestCase {
 	   {
 		   Bank bank3 = new Bank();
 		   bank3 = SystemTest.populate();
-		   bank3.add_client_account(bank3.get_branch("FIL3001"), bank3.get_client("195022","FIL2001"),"1000");
+		   bank3.add_client_account(bank3.get_branch("FIL3001"), bank3.get_client("195022","FIL3001"),"1000");
 	   }
 	   
 	   
@@ -59,7 +59,7 @@ public class BankTest extends TestCase {
 			born_at.set(Calendar.YEAR, 1980);
 			born_at.set(Calendar.MONTH, 11); // 11 = december
 			born_at.set(Calendar.DAY_OF_MONTH, 24);
-		   Clerk clerk_test=new Clerk("Super","Mario",born_at,"3022","So many marios.");
+		   Clerk clerk_test=new Clerk("Super","Mario",born_at,"333022","So many marios.");
 		   Bank bank = new Bank();
 		   bank = SystemTest.populate();
 		   bank.add_clerk_account(bank.get_branch("FIL3001"),clerk_test);//tries to add an existing client
