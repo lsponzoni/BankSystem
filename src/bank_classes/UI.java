@@ -325,6 +325,11 @@ public abstract class UI {
 			}
 		}
 	}
+	
+	protected void set_log_in()
+	{
+		logged_in = true;
+	}
 
 	public Calendar[] get_period_from_user() {
 		Date date;
@@ -362,7 +367,7 @@ public abstract class UI {
 		Client client;
 		History history;
 		String opt;
-		Calendar[] period = new Date[2];
+		Calendar[] period = new Calendar[2];
 		display("Digite o nome do usuario: \n");
 		user = get_string(PROMPT);
 		try{
