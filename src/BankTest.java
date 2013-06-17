@@ -100,7 +100,7 @@ public class BankTest extends TestCase {
 		   Bank bank = new Bank();
 		   bank = SystemTest.populate();
 		   Client sender = bank.get_client("193022", "FIL2001");
-		   result = bank.transfer("999","195022","FIL3001", bank.get_branch("FIL3001"), sender.get_account());
+		   result = bank.transfer("999","195022","FIL3001", bank.get_branch("FIL2001"), sender.get_account());
 		   assertEquals("Sucess", result);
 	   }
 	   
