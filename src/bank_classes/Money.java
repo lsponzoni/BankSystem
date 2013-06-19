@@ -1,5 +1,7 @@
 package bank_classes;
 
+import bankexceptions.InvalidTransaction;
+
 public class Money {
 	private int one_hundred_ammount;
 	
@@ -7,14 +9,18 @@ public class Money {
 		one_hundred_ammount =(int) (x * 100);  
 	}
 
-	public Money(int x){
+	private Money(int x){
 		one_hundred_ammount = x;  
 	}
-	public Money(String initial_balance) {
+	
+	public static Money parseString(String initial_balance) throws InvalidTransaction {
+		if (initial_balance.contains("-")){
+			throw new InvalidTransaction("Negative values unaccepted");
+		}
 		MoneyPair parsed = new MoneyPair(initial_balance);
 		int hundreds = (parsed.get_dollars() * 100);
 		int cents = parsed.get_cents();
-		one_hundred_ammount = hundreds + cents; 
+		return new Money(hundreds + cents); 
 	}
 
 	public Money add(Money m) {

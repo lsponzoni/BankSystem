@@ -69,7 +69,7 @@ public class Bank {
 		Money first_deposit;
 		String account_number = new_account_number();
 		
-		first_deposit = new Money(initial_balance);
+		first_deposit = Money.parseString(initial_balance);
 		Account acc = new Account(account_number, branch, first_deposit);
 		try{
 		new_client.add_account(acc);
@@ -80,9 +80,9 @@ public class Bank {
 		}
 	}	
 	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) throws NotFoundException, InvalidTransaction{
-		Money transfer_ammount = new Money(ammount);
+		Money transfer_ammount = Money.parseString(ammount);
 		Account to = get_client(to_account,to_branch).get_account();
-		Transfer.execute_transfer(gate,transfer_ammount, account, to);
+		Transfer.add_transfer(gate,transfer_ammount, account, to);
 		return "Sucess";
 	}
 	public String deposit (String ammount, String cashParcelId, Branch gate, Account account) throws InvalidTransaction{

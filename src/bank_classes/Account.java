@@ -23,7 +23,7 @@ public class Account {
 	    this.branch_code = branch_code;
 	    this.history = new History();
 	    
-	    Deposit first = new Deposit(account_code, branch_code, initial_balance, "On creation.");
+	    Deposit first = Deposit.newInstance(account_code, branch_code, initial_balance,"On creation");
 	    this.add_to_history(first);
 	}
 	
