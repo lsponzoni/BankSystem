@@ -82,18 +82,18 @@ public class Bank {
 	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) throws NotFoundException, InvalidTransaction{
 		Money transfer_ammount = Money.parseString(ammount);
 		Account to = get_client(to_account,to_branch).get_account();
-		Transfer.add_transfer(gate,transfer_ammount, account, to);
-		return "Sucess";
+		String response = Transfer.add_transfer(gate,transfer_ammount, account, to);
+		return response;
 	}
 	public String deposit (String ammount, String cashParcelId, Branch gate, Account account) throws InvalidTransaction{
-		Money deposited_value= new Money(ammount);
+		Money deposited_value= Money.parseString(ammount);
 		Deposit d =	new Deposit(account.get_account_code(), gate.get_code(), deposited_value, cashParcelId);
 		account.add_to_history(d);
 		return "Success on deposit.\n";
 	}
 	
 	public String withdraw(String ammount, Branch gate, Account acc){
-		Money withdraw_ammount = new Money(ammount);
+		Money withdraw_ammount = Money.parseString(ammount);
 		try{
 		Withdrawal w = new Withdrawal(acc,gate, withdraw_ammount);
 		acc.add_to_history(w);

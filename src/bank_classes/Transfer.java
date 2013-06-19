@@ -35,7 +35,7 @@ public class Transfer extends Transaction {
 		this.to_branch_code = to_branch_code;
 		this.from_account_code = from_acc_code;
 		this.from_branch_code = from_branch_code;		
-		last_transfer_id++;
+
 	}	
 
 	private static Transfer newInstance(TransferRole role, Branch gate, Money value, Calendar date, Account to, Account from) {
@@ -46,15 +46,14 @@ public class Transfer extends Transaction {
 		return transfer;
 	}
 	
-	public static String add_transfer(Branch origin, Money ammount, Account from, Account to) throws InvalidTransaction {
+	public static String add_transfer(Branch origin, Money ammount, Account from, Account to) throws InvalidTransaction{
 		Calendar date = Calendar.getInstance();
-		
 		Transfer f = newInstance(TransferRole.SEND, origin, ammount,date, from, to);
 		Transfer t = newInstance(TransferRole.RECEIVE, origin, ammount,date, from, to);
-		
 		from.add_to_history(f);
 		to.add_to_history(t);
-		return "Success on transfer.\n";
+		last_transfer_id++;		
+		return t.toString();
 	}
 	
 	public String get_from() {
