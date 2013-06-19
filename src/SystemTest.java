@@ -16,6 +16,7 @@ import bank_classes.Branch;
 import bank_classes.Clerk;
 import bank_classes.Client;
 import bank_classes.Money;
+import bank_classes.UI;
 import bank_classes.User;
 import bankexceptions.DuplicateException;
 import bankexceptions.InvalidTransaction;
@@ -84,8 +85,9 @@ public class SystemTest {
 		catch(Exception e){
 			System.out.println("Error at load from data base.");
 		}
-	//	SystemUI sistema_bancario = new SystemUI(bank);
-	//	sistema_bancario.start();
+		UI s = new AtmUI();
+		UI t = new BranchUI();
+		s.start();
 	}
 
 }

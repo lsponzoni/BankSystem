@@ -92,15 +92,16 @@ public class Bank {
 		return "Success on deposit.\n";
 	}
 	
-	public String withdraw(String ammount, Branch gate, Account acc){
-		Money withdraw_ammount = Money.parseString(ammount);
+	public String withdraw(String ammount, Branch gate, Account acc) {
+		Money withdraw_ammount;
 		try{
-		Withdrawal w = new Withdrawal(acc,gate, withdraw_ammount);
-		acc.add_to_history(w);
-		return "Get the money.\n";
+			withdraw_ammount = Money.parseString(ammount);
+			Withdrawal w = Withdrawal.newInstance(acc,gate, withdraw_ammount);
+			acc.add_to_history(w);
 		} catch(InvalidTransaction e){
 			return e.toString();
 		}
+		return "Success.\n";
 	}
 	
 	public String list_branches(Collection<Branch> branches){
