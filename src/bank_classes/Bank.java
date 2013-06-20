@@ -8,6 +8,7 @@ import bankexceptions.InvalidTransaction;
 import bankexceptions.NotFoundException;
 
 public class Bank {
+	private static final String SUCESSO = "Sucesso.\n";
 	private int next_account_number;
 	private Collection<Branch> branches, atms;
 	
@@ -87,17 +88,30 @@ public class Bank {
 			throw new DuplicateException("Trying to duplicate system info.");
 		}
 	}	
-	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) throws NotFoundException, InvalidTransaction{
-		Money transfer_ammount = Money.parseString(ammount);
-		Account to = get_client(to_account,to_branch).get_account();
-		String response = Transfer.add_transfer(gate,transfer_ammount, account, to);
+	public String transfer(String ammount, String to_account, String to_branch, Branch gate, Account account) {
+		Money transfer_ammount;
+		String response;
+		try{
+			transfer_ammount = Money.parseString(ammount);
+			Account to = get_client(to_account,to_branch).get_account();
+			response = Transfer.add_transfer(gate,transfer_ammount, account, to);
+		} catch(InvalidTransaction ite){
+			return ite.toString();
+		} catch(NotFoundException nfe){
+			return nfe.toString();
+		}
 		return response;
 	}
-	public String deposit (String ammount, String cashParcelId, Branch gate, Account account) throws InvalidTransaction{
-		Money deposited_value= Money.parseString(ammount);
+	public String deposit (String ammount, String cashParcelId, Branch gate, Account account) {
+		Money deposited_value;
+		try{
+		deposited_value = Money.parseString(ammount);
 		Deposit d =	new Deposit(account.get_account_code(), gate.get_code(), deposited_value, cashParcelId);
 		account.add_to_history(d);
-		return "Success on deposit.\n";
+		} catch(InvalidTransaction e){
+			return e.toString();
+		}
+		return SUCESSO;
 	}
 	
 	public String withdraw(String ammount, Branch gate, Account acc) {
@@ -109,7 +123,7 @@ public class Bank {
 		} catch(InvalidTransaction e){
 			return e.toString();
 		}
-		return "Success.\n";
+		return SUCESSO;
 	}
 	
 	public String list_branches(Collection<Branch> branches){

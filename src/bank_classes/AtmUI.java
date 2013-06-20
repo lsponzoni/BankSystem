@@ -66,7 +66,7 @@ public class AtmUI extends UI {
 			this.facade.transfer(ammount, to_account_id, to_branch_id, access_branch, ((Client) current_user).get_account());
 		}
 		catch(NotFoundException e){
-			return USER_NOT_FOUND;
+			return "Usuario nao encontrado!";
 		}
 		catch(InvalidTransaction e){
 			return INVALID_TRANSACTION;

@@ -10,28 +10,15 @@ import bankexceptions.InvalidTransaction;
 import bankexceptions.NotFoundException;
 
 public abstract class UI {
-	private static final String NOME_USUARIO_DEPOSITO = "Digite o nome do usuario a receber o deposito: \n";
-	private static final String DIGITE_SUA_SENHA = "Digite sua senha: \n";
-	private static final String DIGITE_O_NOME_DE_USUARIO = "Digite o nome de usuario: \n";
-	private static final String DIGITE_A_QUANTIA_A_SER_TRANSFERIDA = "Digite a quantia a ser transferida: \n";
-	private static final String DIGITE_O_CODIGO_DA_AGENCIA_DESTINO = "Digite o codigo da agencia destino: \n";
-	private static final String DIGITE_O_CODIGO_DA_CONTA_DESTINO = "Digite o codigo da conta destino: \n";
-	private static final String DIGITE_O_CLIENTE_DE_ENVIO = "Digite o cliente de envio: \n";
-	protected static final String OPERACAO_FINALIZADA = "Operacao Finalizada";
-	protected static final String INVALID_TRANSACTION = "Transacao invalida.";
-	private static final String SELECT_ONE_FROM_BELLOW_LIST = "Escolha uma operacao abaixo";
-	protected static final String USER_NOT_FOUND = "Usuario nao encontrado!";
-	protected static final String WRONG_PASSWORD = "Senha incorreta!";
-	protected static final String LOGIN_OK = "Login realizado.";
-	protected static final String PROMPT = "\n=> ";
-	private static final String CLEAR_SCREEN = "\000C";
+	
 	protected boolean logged_in;
 	protected User current_user;
 	protected Branch access_branch;
 	protected Bank facade;
-	private Reader input;
-	private boolean systemOn; 
+	private Reader input; 
 	
+	private boolean systemOn;
+
 	public UI(Bank bank, Branch branch) {
 		// Bank and branch data addition
 		this.access_branch = branch;
@@ -40,20 +27,30 @@ public abstract class UI {
 		logged_in = false;
 		systemOn = false;
 	}
-
-	public void display(String message){
-		System.out.println(message);		
-	}
 	
-	public  String get_string(String question){
-		display(question);
-		display(PROMPT);
-		return input.read();
-	}
-
 	private static boolean yes_or_no(String yes_or_no){
 		return (yes_or_no.toLowerCase().startsWith("y"));
 	}
+	
+	protected abstract String add_new_account_to_system();
+
+	public String balance() {
+		String user;
+		Client client;
+		display("Digite o nome do usuario: \n");
+		user = get_string("\n=> ");
+		try{
+			client = this.facade.get_client(user, this.access_branch.get_code());
+		}
+		catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
+		Date dateNow = new Date();
+		return "Seu saldo $ " + client.get_account().get_balance().toString() +
+				"\n Visto em " + dateNow.toString();
+	}
+
+	protected abstract String call_login(String username, String password);
 
 	public boolean confirm(String question){
 		final String Y_OR_N_PREFFIX_WORD_REGEX = "[YyNn].*";
@@ -68,125 +65,34 @@ public abstract class UI {
 		return answer;
 	}
 
-	protected String logout() {
-		if(confirm("logout")){
-			logged_in = false;
-		}
-		disable_operations();
-		return OPERACAO_FINALIZADA;
-	}
-
-	protected abstract User exist_at_system(String username,String branch) throws NotFoundException;
-	
-	protected abstract String add_new_account_to_system();
-	
-	private String login(){
-		String username, password;		
-		username = get_string(DIGITE_O_NOME_DE_USUARIO);
-		password = get_string(DIGITE_SUA_SENHA);
-		return call_login(username, password);
-	}
-	
-	protected abstract String call_login(String username, String password);
-	
-	protected String login(String username, String branch, String password) {
-		String msg;
-		try{
-			current_user = exist_at_system(username, branch);
-			if(current_user.passwordMatch(password)) {
-				logged_in = true;
-				msg = LOGIN_OK;
-			} else {
-				msg = WRONG_PASSWORD;
-			}
-		}catch(NotFoundException exception){
-			msg = USER_NOT_FOUND;
-		}
-		return msg;
-	}
-
-	private void disable_operations() {
-		display(CLEAR_SCREEN);
-	}
-	
-	private MenuOptions[] get_unlogged_menu_options(){
-		MenuOptions[] restrictions = {
-					MenuOptions.LOGIN,
-					MenuOptions.EXIT
-					};
-		return restrictions;
-	}
-	
-	public boolean isLoggedIn() {
-		return logged_in;
-	}
-
 	public String deposit() {
 		String ammount;
 		String cashParcelId;
 		String user;
 		Client client;
 
-		user = get_string(NOME_USUARIO_DEPOSITO);
+		user = get_string("Digite o nome do usuario a receber o deposito: \n");
 		try{
 			client = this.facade.get_client(user, this.access_branch.get_code());
 		}
 		catch(NotFoundException e){
-			return USER_NOT_FOUND;
+			return "Usuario nao encontrado!";
 		}
 
 		String value = "Digite a quantia a ser depositada: \n";
 		ammount = get_string(value);
 		String get_parcel = "Digite o codigo do envelope: \n";
-		display(get_parcel);
-		cashParcelId = get_string(PROMPT);
-		try{
-			this.facade.deposit(ammount, cashParcelId, access_branch, client.get_account());
-		}
-		catch(InvalidTransaction e){
-			return INVALID_TRANSACTION;
-		}
-		return OPERACAO_FINALIZADA;
-	}
-
-	public String withdraw() {
-		String ammount;
-		String user;
-		Client client;
-		user = get_string("Digite o nome do usuario a fazer o saque: \n");
-		try{
-			client = this.facade.get_client(user, this.access_branch.get_code());
-		}
-		catch(NotFoundException e){
-			return USER_NOT_FOUND;
-		}
-		ammount = get_string("Digite a quantia a ser retirada: \n");
-		return this.facade.withdraw(ammount, access_branch, client.get_account());
-	}
-
-	public void unlogged_menu_loop(){
-		systemOn = true;
+		cashParcelId = get_string(get_parcel);
 		
-		while(systemOn ){
-			user_interaction(get_unlogged_menu_options());
-		}
-		input.close(); 
+		return this.facade.deposit(ammount, cashParcelId, access_branch, client.get_account());
 	}
 	
-	char get_next_operation(MenuOptions[] restricted_to_options){
-		String input;
-		String menu;
-		char op_value;
-		
-		do {
-			menu = MenuOptions.menu(SELECT_ONE_FROM_BELLOW_LIST, 
-					restricted_to_options);
-			input = get_string(menu);
-			op_value = input.toUpperCase().charAt(0);
-		}while(! MenuOptions.validOption(op_value,
-					      	restricted_to_options));
-		
-		return op_value;
+	private void disable_operations() {
+		display("\000C");
+	}
+	
+	public void display(String message){
+		System.out.println(message);		
 	}
 	
 	public String execute(char optCode){
@@ -216,55 +122,13 @@ public abstract class UI {
 		}
 		return message;
 	}
+	
+	protected abstract User exist_at_system(String username,String branch) throws NotFoundException;
 
 	private String exit() {
 		systemOn = false;
 		return "Exiting " + access_branch.get_code() + "\n" +
 				access_branch.get_name();
-	}
-
-	protected abstract MenuOptions[] get_logged_menu_options();
-	
-	public void logged_menu_loop(){
-		while(isLoggedIn()){
-			user_interaction(get_logged_menu_options());
-		}
-	}
-	
-	private void user_interaction(MenuOptions[] restrict_to_options){
-		char operation_id = get_next_operation(restrict_to_options);
-		String execution_result = execute(operation_id);
-		display(execution_result);
-	}
-	
-	public String transfer() {
-		String ammount;
-		String user;
-		Client client;
-		String to_account_id;
-		String to_branch_id;
-		
-		user = get_string(DIGITE_O_CLIENTE_DE_ENVIO);
-		try{
-			client = this.facade.get_client(user, this.access_branch.get_code());
-		}
-		catch(NotFoundException e){
-			return USER_NOT_FOUND;
-		}
-		
-		to_account_id = get_string(DIGITE_O_CODIGO_DA_CONTA_DESTINO);
-		to_branch_id = get_string(DIGITE_O_CODIGO_DA_AGENCIA_DESTINO);
-		ammount = get_string(DIGITE_A_QUANTIA_A_SER_TRANSFERIDA);
-		try{
-			this.facade.transfer(ammount, to_account_id, to_branch_id, access_branch, client.get_account());
-		}
-		catch(NotFoundException e){
-			return USER_NOT_FOUND;
-		}
-		catch(InvalidTransaction e){
-			return INVALID_TRANSACTION;
-		}
-		return OPERACAO_FINALIZADA;
 	}
 	
 	private Date get_date_from_user(String details){
@@ -285,8 +149,37 @@ public abstract class UI {
 		return date;
 	}
 	
-	protected void set_log_in()	{
-		logged_in = true;
+	protected abstract MenuOptions[] get_logged_menu_options();
+
+	private Calendar[] get_month_from_user() {
+		Calendar calendar;
+		Calendar[] period = new Calendar[2];
+		String month;		
+		String ask_month = "Informe o mês a ser visualizado:  " +
+				"(1-12; ex: Janeiro = 1) \n";	
+		month = get_string(ask_month);
+		calendar = Calendar.getInstance();
+		calendar.set(calendar.get(Calendar.YEAR), Integer.parseInt(month), 1);
+		period[0] = calendar;
+		calendar.add(Calendar.MONTH, 1);
+		period[1] = calendar;
+		return period;
+	}
+
+	char get_next_operation(MenuOptions[] restricted_to_options){
+		String input;
+		String menu;
+		char op_value;
+		
+		do {
+			menu = MenuOptions.menu("Escolha uma operacao abaixo", 
+					restricted_to_options);
+			input = get_string(menu);
+			op_value = input.toUpperCase().charAt(0);
+		}while(! MenuOptions.validOption(op_value,
+					      	restricted_to_options));
+		
+		return op_value;
 	}
 
 	private Calendar[] get_period_from_user() {
@@ -305,20 +198,70 @@ public abstract class UI {
 		return period;
 		
 	}
+	
+	public  String get_string(String question){
+		display(question);
+		display("\n=> ");
+		return input.read();
+	}
+	
+	private MenuOptions[] get_unlogged_menu_options(){
+		MenuOptions[] restrictions = {
+					MenuOptions.LOGIN,
+					MenuOptions.EXIT
+					};
+		return restrictions;
+	}
 
-	private Calendar[] get_month_from_user() {
-		Calendar calendar;
-		Calendar[] period = new Calendar[2];
-		String month;		
-		String ask_month = "Informe o mês a ser visualizado:  " +
-				"(1-12; ex: Janeiro = 1) \n";	
-		month = get_string(ask_month);
-		calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), Integer.parseInt(month), 1);
-		period[0] = calendar;
-		calendar.add(Calendar.MONTH, 1);
-		period[1] = calendar;
-		return period;
+	public boolean isLoggedIn() {
+		return logged_in;
+	}
+
+	public void logged_menu_loop(){
+		while(isLoggedIn()){
+			user_interaction(get_logged_menu_options());
+		}
+	}
+	
+	private String login(){
+		String username, password;		
+		username = get_string("Digite o nome de usuario: \n");
+		password = get_string("Digite sua senha: \n");
+		return call_login(username, password);
+	}
+	
+	protected String login(String username, String branch, String password) {
+		String msg;
+		try{
+			current_user = exist_at_system(username, branch);
+			if(current_user.passwordMatch(password)) {
+				logged_in = true;
+				msg = "Login realizado.";
+			} else {
+				msg = "Senha incorreta!";
+			}
+		}catch(NotFoundException exception){
+			msg = "Usuario nao encontrado!";
+		}
+		return msg;
+	}
+	
+	protected String logout() {
+		if(confirm("logout")){
+			logged_in = false;
+		}
+		disable_operations();
+		return "Operacao Finalizada";
+	}
+	
+	protected void set_log_in()	{
+		logged_in = true;
+	}
+	
+	public void start(){
+		String msg = "Bem vindo ao WAND Bank System. \n";
+		display(msg);
+		unlogged_menu_loop();
 	}
 
 	private String transaction_history() {
@@ -328,16 +271,16 @@ public abstract class UI {
 		String opt;
 		Calendar[] period = new Calendar[2];
 		display("Digite o nome do usuario: \n");
-		user = get_string(PROMPT);
+		user = get_string("\n=> ");
 		try{
 			client = this.facade.get_client(user, this.access_branch.get_code());
 		}
 		catch(NotFoundException e){
-			return USER_NOT_FOUND;
+			return "Usuario nao encontrado!";
 		}
 		
 		history = client.get_account().get_history();
-		display(SELECT_ONE_FROM_BELLOW_LIST);
+		display("Escolha uma operacao abaixo");
 		
 		do{
 			display("1> Visualizar historico do mes anterior \n" +
@@ -358,30 +301,59 @@ public abstract class UI {
 		}
 		catch(InvalidTransaction e)
 		{
-			return INVALID_TRANSACTION;
+			return "Transacao invalida.";
 		}
 	
 	}
 
-	public void start(){
-		String msg = "Bem vindo ao WAND Bank System. \n";
-		display(msg);
-		unlogged_menu_loop();
-	}
-
-	public String balance() {
+	public String transfer() {
+		String ammount;
 		String user;
 		Client client;
-		display("Digite o nome do usuario: \n");
-		user = get_string(PROMPT);
+		String to_account_id;
+		String to_branch_id;
+		
+		user = get_string("Digite o cliente de envio: \n");
 		try{
-			client = this.facade.get_client(user, this.access_branch.get_code());
+			client = this.facade.get_client(user, access_branch.get_code());
 		}
 		catch(NotFoundException e){
-			return USER_NOT_FOUND;
+			return "Usuario nao encontrado!";
 		}
-		Date dateNow = new Date();
-		return "Seu saldo $ " + client.get_account().get_balance().toString() +
-				"\n Visto em " + dateNow.toString();
+		
+		to_account_id = get_string("Digite o codigo da conta destino: \n");
+		to_branch_id = get_string("Digite o codigo da agencia destino: \n");
+		ammount = get_string("Digite a quantia a ser transferida: \n");
+		return facade.transfer(ammount, to_account_id, to_branch_id, access_branch, client.get_account());
+	}
+
+	public void unlogged_menu_loop(){
+		systemOn = true;
+		
+		while(systemOn ){
+			user_interaction(get_unlogged_menu_options());
+		}
+		input.close(); 
+	}
+
+	private void user_interaction(MenuOptions[] restrict_to_options){
+		char operation_id = get_next_operation(restrict_to_options);
+		String execution_result = execute(operation_id);
+		display(execution_result);
+	}
+
+	public String withdraw() {
+		String ammount;
+		String user, branch;
+		Client client;
+		user = get_string("Digite o nome do usuario saque \n");
+		branch = get_string("Digite o código da agencia: \n");
+		ammount = get_string("Digite a quantia a ser retirada: \n");
+		try{
+			client = (Client) exist_at_system(user, branch);
+			return facade.withdraw(ammount, access_branch, client.get_account());
+		} catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
 	}
 }

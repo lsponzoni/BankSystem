@@ -33,15 +33,17 @@ public class BranchUI extends UI {
 	public String add_new_account_to_system() {
 		Client client = create_new_client();
 		String initial_balance;
+		String user_and_password;
 		initial_balance = get_string("Quantia inicial: ");
 		try{
-			this.facade.add_client_account(access_branch, client, initial_balance);
+			 facade.add_client_account(access_branch, client, initial_balance);
+			 user_and_password = client.get_creation_data();
 		} catch(InvalidTransaction e)	{
-			return INVALID_TRANSACTION;
+			return "Transacao invalida.";
 		} catch(DuplicateException e)	{
 			return "Conta duplicada!";
 		}
-		return "Successo.";
+		return user_and_password;
 	}
 
 	protected Client create_new_client() {

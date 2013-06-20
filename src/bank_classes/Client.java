@@ -30,7 +30,9 @@ public class Client extends User {
 		this.cpf = cpf;
 		this.account = null;
 	}
-	
+
+
+
 	public String get_account_id() {
 		return super.getUsername();
 	}
