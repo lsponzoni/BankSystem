@@ -1,5 +1,9 @@
+import static org.junit.Assert.*;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import org.junit.Test;
 
 
 import bank_classes.Bank;
@@ -8,10 +12,10 @@ import bank_classes.Client;
 import bankexceptions.DuplicateException;
 import bankexceptions.InvalidTransaction;
 import bankexceptions.NotFoundException;
-import junit.framework.TestCase;
 
 
-public class BankTest extends TestCase {
+
+public class BankTest {
 	  @Test (expected = DuplicateException.class)
 	   public void duplicated_account_mario() throws DuplicateException, InvalidTransaction, NotFoundException
 	   {
@@ -186,11 +190,9 @@ public class BankTest extends TestCase {
 		   bank = SystemTest.populate();
 		   Client sender = bank.get_client("194022", "FIL3001");
 		   result = bank.withdraw("-10",bank.get_branch("FIL3001"),sender.get_account());
-		   	   
 	   }
 	   @Test
-	   public void test_withdraw_fefe() throws InvalidTransaction//testa saque de fefe
-, NotFoundException
+	   public void test_withdraw_fefe() throws InvalidTransaction, NotFoundException
 	   {
 		   String result;
 		   Bank bank = new Bank();
@@ -200,8 +202,8 @@ public class BankTest extends TestCase {
 		   assertEquals("Get your money.\n", result);	   
 	   }
 	   
-	   public void test_withdraw_invalido_fefe() throws InvalidTransaction//testa saque invalido de fefe
-, NotFoundException
+	   @Test (expected = InvalidTransaction.class)
+	   public void test_withdraw_invalido_fefe() throws InvalidTransaction, NotFoundException
 	   {
 		   String result;
 		   Bank bank = new Bank();
@@ -210,16 +212,4 @@ public class BankTest extends TestCase {
 		   result = bank.withdraw("-10",bank.get_branch("FIL3001"),sender.get_account());   
 	   }
 	
-
-public static void main(String[] args) {
-   Bank bank = SystemTest.populate();
-//   AtmUI only_client_use = new AtmUI(bank, bank.get_branch("ATM2009"));
-//   BranchUI only_clerk_use = new BranchUI(bank, bank.get_branch("FIL2001"));
-//   //UI.main_loop(); 
-//   Client client = only_clerk_use.client_dataform();
-//   Money initial_balance = only_clerk_use.money_dataform();
-//   only_clerk_use.add_new_account_to_system(client, initial_balance);
-   SystemUI sistema_bancario = new SystemUI(bank);
-   sistema_bancario.start();
-}
 }

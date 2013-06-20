@@ -11,6 +11,7 @@ import bankexceptions.NotFoundException;
 
 public abstract class UI {
 	
+	private static final String PROMPT = "\n=> ";
 	protected boolean logged_in;
 	protected User current_user;
 	protected Branch access_branch;
@@ -34,61 +35,27 @@ public abstract class UI {
 	
 	protected abstract String add_new_account_to_system();
 
-	public String balance() {
-		String user;
-		Client client;
-		display("Digite o nome do usuario: \n");
-		user = get_string("\n=> ");
-		try{
-			client = this.facade.get_client(user, this.access_branch.get_code());
-		}
-		catch(NotFoundException e){
-			return "Usuario nao encontrado!";
-		}
-		Date dateNow = new Date();
-		return "Seu saldo $ " + client.get_account().get_balance().toString() +
-				"\n Visto em " + dateNow.toString();
-	}
-
+	protected abstract String balance();
+	
 	protected abstract String call_login(String username, String password);
 
 	public boolean confirm(String question){
 		final String Y_OR_N_PREFFIX_WORD_REGEX = "[YyNn].*";
 		final String CONFIRM_PREFFIX = "Do you really want to ";
 		boolean valid_answer,answer;
-		String input = "y";		
+		String string_answer = "y";		
 		do{
-			input = get_string(CONFIRM_PREFFIX + question);
-			valid_answer = input.matches(Y_OR_N_PREFFIX_WORD_REGEX);
+			string_answer = get_string(CONFIRM_PREFFIX + question);
+			valid_answer = string_answer.matches(Y_OR_N_PREFFIX_WORD_REGEX);
 		}while(!valid_answer);
-		answer = yes_or_no(input);
+		answer = yes_or_no(string_answer);
 		return answer;
 	}
 
-	public String deposit() {
-		String ammount;
-		String cashParcelId;
-		String user;
-		Client client;
-
-		user = get_string("Digite o nome do usuario a receber o deposito: \n");
-		try{
-			client = this.facade.get_client(user, this.access_branch.get_code());
-		}
-		catch(NotFoundException e){
-			return "Usuario nao encontrado!";
-		}
-
-		String value = "Digite a quantia a ser depositada: \n";
-		ammount = get_string(value);
-		String get_parcel = "Digite o codigo do envelope: \n";
-		cashParcelId = get_string(get_parcel);
-		
-		return this.facade.deposit(ammount, cashParcelId, access_branch, client.get_account());
-	}
+	protected abstract String deposit();
 	
 	private void disable_operations() {
-		display("\000C");
+		//display("\000C");
 	}
 	
 	public void display(String message){
@@ -151,7 +118,7 @@ public abstract class UI {
 	
 	protected abstract MenuOptions[] get_logged_menu_options();
 
-	private Calendar[] get_month_from_user() {
+	protected Calendar[] get_month_from_user() {
 		Calendar calendar;
 		Calendar[] period = new Calendar[2];
 		String month;		
@@ -167,22 +134,22 @@ public abstract class UI {
 	}
 
 	char get_next_operation(MenuOptions[] restricted_to_options){
-		String input;
+		String enter;
 		String menu;
 		char op_value;
 		
 		do {
 			menu = MenuOptions.menu("Escolha uma operacao abaixo", 
 					restricted_to_options);
-			input = get_string(menu);
-			op_value = input.toUpperCase().charAt(0);
+			enter = get_string(menu);
+			op_value = enter.toUpperCase().charAt(0);
 		}while(! MenuOptions.validOption(op_value,
 					      	restricted_to_options));
 		
 		return op_value;
 	}
 
-	private Calendar[] get_period_from_user() {
+	protected Calendar[] get_period_from_user() {
 		Date date;
 		Calendar[] period = new Calendar[2];
 		String QUERY_DATE_FORMAT = "(aaaa-mm-dd)";
@@ -201,10 +168,14 @@ public abstract class UI {
 	
 	public  String get_string(String question){
 		display(question);
-		display("\n=> ");
+		return get_string();
+	}
+
+	public  String get_string(){
+		display(PROMPT);
 		return input.read();
 	}
-	
+
 	private MenuOptions[] get_unlogged_menu_options(){
 		MenuOptions[] restrictions = {
 					MenuOptions.LOGIN,
@@ -264,69 +235,10 @@ public abstract class UI {
 		unlogged_menu_loop();
 	}
 
-	private String transaction_history() {
-		String user;
-		Client client;
-		History history;
-		String opt;
-		Calendar[] period = new Calendar[2];
-		display("Digite o nome do usuario: \n");
-		user = get_string("\n=> ");
-		try{
-			client = this.facade.get_client(user, this.access_branch.get_code());
-		}
-		catch(NotFoundException e){
-			return "Usuario nao encontrado!";
-		}
-		
-		history = client.get_account().get_history();
-		display("Escolha uma operacao abaixo");
-		
-		do{
-			display("1> Visualizar historico do mes anterior \n" +
-				"2> Selecionar periodo a ser visualizado");
-			opt = get_string("");
-		} while(!opt.equals("1") && !opt.equals("2"));
-		
-		if(opt.equals("1")) {
-			period = get_month_from_user();
-		}
-		if(opt.equals("2"))	{
-			
-			period = get_period_from_user();
-		}
-		
-		try{
-			return history.get_transactions(period[0], period[1]).toString();
-		}
-		catch(InvalidTransaction e)
-		{
-			return "Transacao invalida.";
-		}
+	protected abstract String transaction_history();
 	
-	}
-
-	public String transfer() {
-		String ammount;
-		String user;
-		Client client;
-		String to_account_id;
-		String to_branch_id;
-		
-		user = get_string("Digite o cliente de envio: \n");
-		try{
-			client = this.facade.get_client(user, access_branch.get_code());
-		}
-		catch(NotFoundException e){
-			return "Usuario nao encontrado!";
-		}
-		
-		to_account_id = get_string("Digite o codigo da conta destino: \n");
-		to_branch_id = get_string("Digite o codigo da agencia destino: \n");
-		ammount = get_string("Digite a quantia a ser transferida: \n");
-		return facade.transfer(ammount, to_account_id, to_branch_id, access_branch, client.get_account());
-	}
-
+	protected abstract String transfer();
+	
 	public void unlogged_menu_loop(){
 		systemOn = true;
 		
@@ -342,18 +254,5 @@ public abstract class UI {
 		display(execution_result);
 	}
 
-	public String withdraw() {
-		String ammount;
-		String user, branch;
-		Client client;
-		user = get_string("Digite o nome do usuario saque \n");
-		branch = get_string("Digite o código da agencia: \n");
-		ammount = get_string("Digite a quantia a ser retirada: \n");
-		try{
-			client = (Client) exist_at_system(user, branch);
-			return facade.withdraw(ammount, access_branch, client.get_account());
-		} catch(NotFoundException e){
-			return "Usuario nao encontrado!";
-		}
-	}
+	protected abstract String withdraw(); 	
 }

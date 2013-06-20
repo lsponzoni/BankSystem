@@ -1,6 +1,7 @@
 package bank_classes;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import bankexceptions.DuplicateException;
 import bankexceptions.InvalidTransaction;
@@ -44,6 +45,123 @@ public class BranchUI extends UI {
 			return "Conta duplicada!";
 		}
 		return user_and_password;
+	}
+	
+	protected String balance() {
+		String user;
+		Client client;
+		display("Digite o nome do usuario: \n");
+		user = get_string();
+		try{
+			client = this.facade.get_client(user, this.access_branch.get_code());
+		}
+		catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
+		Date dateNow = new Date();
+		return "Seu saldo $ " + client.get_account().get_balance().toString() +
+				"\n Visto em " + dateNow.toString();
+	}
+
+	
+	protected String transaction_history() {
+		String user;
+		Client client;
+		History history;
+		String opt;
+		Calendar[] period = new Calendar[2];
+		display("Digite o nome do usuario: \n");
+		user = get_string();
+		try{
+			client = this.facade.get_client(user, this.access_branch.get_code());
+		}
+		catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
+		
+		history = client.get_account().get_history();
+		display("Escolha uma operacao abaixo");
+		
+		do{
+			display("1> Visualizar historico do mes anterior \n" +
+				"2> Selecionar periodo a ser visualizado");
+			opt = get_string("");
+		} while(!opt.equals("1") && !opt.equals("2"));
+		
+		if(opt.equals("1")) {
+			period = get_month_from_user();
+		}
+		if(opt.equals("2"))	{
+			
+			period = get_period_from_user();
+		}
+		
+		try{
+			return history.get_transactions(period[0], period[1]).toString();
+		}
+		catch(InvalidTransaction e)
+		{
+			return "Transacao invalida.";
+		}
+	
+	}
+
+	protected String transfer() {
+		String ammount;
+		String user;
+		Client client;
+		String to_account_id;
+		String to_branch_id;
+		
+		user = get_string("Digite o cliente de envio: \n");
+		try{
+			client = this.facade.get_client(user, access_branch.get_code());
+		}
+		catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
+		
+		to_account_id = get_string("Digite o codigo da conta destino: \n");
+		to_branch_id = get_string("Digite o codigo da agencia destino: \n");
+		ammount = get_string("Digite a quantia a ser transferida: \n");
+		return facade.transfer(ammount, to_account_id, to_branch_id, access_branch, client.get_account());
+	}
+
+	protected String withdraw() {
+		String ammount;
+		String user, branch;
+		Client client;
+		user = get_string("Digite o nome do usuario saque \n");
+		branch = get_string("Digite o código da agencia: \n");
+		ammount = get_string("Digite a quantia a ser retirada: \n");
+		try{
+			client = (Client) exist_at_system(user, branch);
+			return facade.withdraw(ammount, access_branch, client.get_account());
+		} catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
+	}
+
+	protected String deposit() {
+		String ammount;
+		String cashParcelId;
+		String user;
+		Client client;
+
+		user = get_string("Digite o nome do usuario a receber o deposito: \n");
+		try{
+			client = this.facade.get_client(user, this.access_branch.get_code());
+		}
+		catch(NotFoundException e){
+			return "Usuario nao encontrado!";
+		}
+
+		String value = "Digite a quantia a ser depositada: \n";
+		ammount = get_string(value);
+		String get_parcel = "Digite o codigo do envelope: \n";
+		cashParcelId = get_string(get_parcel);
+		
+		return this.facade.deposit(ammount, cashParcelId, access_branch, client.get_account());
 	}
 
 	protected Client create_new_client() {

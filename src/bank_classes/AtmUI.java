@@ -1,5 +1,8 @@
 package bank_classes;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import bankexceptions.InvalidTransaction;
 import bankexceptions.NotFoundException;
 //
@@ -14,10 +17,6 @@ import bankexceptions.NotFoundException;
 //
 
 public class AtmUI extends UI {
-	private static final String INVALID_TRANSACTION = "Transação Inválida";
-	private static final String OPERACAO_FINALIZADA = "Fim\n";
-	private static final String DIGITE_SUA_AGENCIA = "Digite sua agência.\n";
-
 	public AtmUI(Bank bank, Branch branch){
 		super(bank, branch);
 	}
@@ -28,7 +27,7 @@ public class AtmUI extends UI {
 
 	protected String call_login(String username, String password){
 		String branch_code;
-		branch_code = get_string(DIGITE_SUA_AGENCIA);
+		branch_code = get_string("Digite sua agência.\n");
 		return login(username, branch_code, password);
 	}
 
@@ -37,13 +36,8 @@ public class AtmUI extends UI {
 		String cashParcelId;
 		ammount = get_string("Digite a quantia a ser depositada: ");
 		cashParcelId = get_string("Digite o codigo do envelope: ");
-		try{
-			this.facade.deposit(ammount, cashParcelId, access_branch, ((Client) current_user).get_account());
-		}
-		catch(InvalidTransaction e){
-			return INVALID_TRANSACTION;
-		}
-		return OPERACAO_FINALIZADA;
+		this.facade.deposit(ammount, cashParcelId, access_branch, ((Client) current_user).get_account());
+		return "Fim\n";
 	}
 
 	
@@ -61,18 +55,8 @@ public class AtmUI extends UI {
 		to_account_id = get_string("Digite o codigo da conta destino: \n");
 		to_branch_id = get_string("Digite o codigo da agencia destino: \n");
 		ammount = get_string("Digite a quantia a ser transferida: \n");
-		
-		try{
-			this.facade.transfer(ammount, to_account_id, to_branch_id, access_branch, ((Client) current_user).get_account());
-		}
-		catch(NotFoundException e){
-			return "Usuario nao encontrado!";
-		}
-		catch(InvalidTransaction e){
-			return INVALID_TRANSACTION;
-		}
-		
-		return OPERACAO_FINALIZADA;
+				
+		return 	this.facade.transfer(ammount, to_account_id, to_branch_id, access_branch, ((Client) current_user).get_account());
 	}
 
 	@Override
@@ -90,5 +74,44 @@ public class AtmUI extends UI {
 	@Override
 	protected String add_new_account_to_system() {
 		return "Not supported";
+	}
+
+	@Override
+	protected String transaction_history() {
+		String user;
+		Client client = (Client) current_user;
+		History history;
+		String opt;
+		Calendar[] period = new Calendar[2];
+
+		history = client.get_account().get_history();
+		display("Escolha uma operacao abaixo");
+		do{
+			display("1> Visualizar historico do mes anterior \n" +
+				"2> Selecionar periodo a ser visualizado");
+			opt = get_string();
+		} while(!opt.equals("1") && !opt.equals("2"));
+		
+		if(opt.equals("1")) {
+			period = get_month_from_user();
+		}
+		if(opt.equals("2"))	{			
+			period = get_period_from_user();
+		}
+		try{
+			return history.get_transactions(period[0], period[1]).toString();
+		}
+		catch(InvalidTransaction e)		{
+			return "Transacao invalida.";
+		}
+	
+	}
+
+
+	@Override
+	protected String balance() {
+		Date dateNow = new Date();
+		return "Seu saldo $ " + ((Client) current_user).get_account().get_balance().toString() +
+				"\n Visto em " + dateNow.toString();
 	}
 }

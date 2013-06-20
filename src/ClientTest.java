@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Constructor;
 import java.util.Calendar;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -31,8 +32,10 @@ public class ClientTest {
 
 	@Test (expected = InvalidTransaction.class)
 	public void before_adding_account_dont_add_transactions() throws InvalidTransaction, DuplicateException {
-		c.add_transaction(new Transaction("","",Calendar.getInstance(),new Money(0)));
-		
+		Constructor<Transaction> constructor = Transaction.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		Transaction t = constructor.newInstance("","",Calendar.getInstance(),new Money(0)); 
+		c.add_transaction(t);
 	}
 
 }
