@@ -18,31 +18,18 @@ import bankexceptions.NotFoundException;
 
 public class BranchUI extends UI {
 	public BranchUI(Bank bank, Branch branch) {
-		// TODO Auto-generated constructor stub
 		super(bank,branch);
 	}
 
 	protected User exist_at_system(String username,String branch) throws NotFoundException{
 		return access_branch.get_clerk(username);
 	}
-
-
-	public String login(String username, String password) {
-		String msg;
-		try{
-			current_user = this.facade.get_clerk(username, access_branch.get_code());
-			if(current_user.passwordMatch(password)){
-				set_log_in();
-				msg = "Login realizado.";
-			} else{
-				msg = "Senha incorreta!";
-			}
-		}catch(NotFoundException excep){
-			msg = "Funcionário não encontrado.";
-		}
-		return msg;
+	
+	protected String call_login(String username, String password){
+		return login(username, this.access_branch.get_code(), password);
 	}
 
+	@Override
 	public String add_new_account_to_system() {
 		Client client = create_new_client();
 		String initial_balance;
@@ -78,7 +65,14 @@ public class BranchUI extends UI {
 	}
 	@Override
 	protected MenuOptions[] get_logged_menu_options() {
-		// TODO Auto-generated method stub
-		return null;
+		MenuOptions[] LOGGED_MENU_OPTIONS = {MenuOptions.LOGOUT, 
+				   MenuOptions.BALANCE, 
+				   MenuOptions.BRANCH, 
+				   MenuOptions.DEPOSIT,
+				   MenuOptions.HISTORY,
+				   MenuOptions.TRANSFER,
+				   MenuOptions.NEW_ACCOUNT
+				   };
+		return LOGGED_MENU_OPTIONS;
 	}
 }

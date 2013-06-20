@@ -14,15 +14,9 @@ import bankexceptions.NotFoundException;
 //
 
 public class AtmUI extends UI {
-	private static final String INVALID_TRANSACTION = null;
-	private static final String OPERACAO_FINALIZADA = null;
-	MenuOptions[] LOGGED_MENU_OPTIONS = {MenuOptions.LOGOUT, 
-			   MenuOptions.BALANCE, 
-			   MenuOptions.BRANCH, 
-			   MenuOptions.DEPOSIT,
-			   MenuOptions.HISTORY,
-			   MenuOptions.TRANSFER,
-			   };
+	private static final String INVALID_TRANSACTION = "Transação Inválida";
+	private static final String OPERACAO_FINALIZADA = "Fim\n";
+	private static final String DIGITE_SUA_AGENCIA = "Digite sua agência.\n";
 
 	public AtmUI(Bank bank, Branch branch){
 		super(bank, branch);
@@ -32,20 +26,10 @@ public class AtmUI extends UI {
 		return facade.get_client(username, branch);
 	}
 
-	protected String login(String username, String branch, String password) {
-		String msg;
-		try{
-			current_user = exist_at_system( username, branch);
-			if(current_user.passwordMatch(password)) {
-				super.set_log_in();
-				msg = LOGIN_OK;
-			} else {
-				msg = WRONG_PASSWORD;
-			}
-		}catch(NotFoundException excep){
-			msg = USER_NOT_FOUND;
-		}
-		return msg;
+	protected String call_login(String username, String password){
+		String branch_code;
+		branch_code = get_string(DIGITE_SUA_AGENCIA);
+		return login(username, branch_code, password);
 	}
 
 	public String deposit() {
@@ -93,6 +77,18 @@ public class AtmUI extends UI {
 
 	@Override
 	protected MenuOptions[] get_logged_menu_options() {
+		MenuOptions[] LOGGED_MENU_OPTIONS = {MenuOptions.LOGOUT, 
+				   MenuOptions.BALANCE, 
+				   MenuOptions.BRANCH, 
+				   MenuOptions.DEPOSIT,
+				   MenuOptions.HISTORY,
+				   MenuOptions.TRANSFER,
+				   };
 		return LOGGED_MENU_OPTIONS;
+	}
+
+	@Override
+	protected String add_new_account_to_system() {
+		return "Not supported";
 	}
 }
