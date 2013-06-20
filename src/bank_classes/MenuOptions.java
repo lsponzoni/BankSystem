@@ -3,19 +3,19 @@ package bank_classes;
 public enum MenuOptions {
 	LOGIN('L', "Login"), 
 	LOGOUT('O', "Logout"),
-	EXIT('D', "Desligar"),
+	EXIT('F', "Fim"),
 	
 	NEW_ACCOUNT('N',"Nova conta"),
 
 	BALANCE('S', "Saldo"),
-	HISTORY('H', "Extrato"),
+	HISTORY('E', "Extrato"),
 	TRANSFER('T', "Transferir"),
 	DEPOSIT('D', "Depósito"),
-	WITHDRAW('W', "Retirada"),
+	WITHDRAW('R', "Retirada"),
 
 	BRANCH('A', "Menu Agência"),
 	ATM('C', "Caixa Eletrônico"),
-	EXIT_ALL('E',"Bank Shutdown");
+	EXIT_ALL('K',"Bank Shutdown"); // nao usada
 
 	private final char c;
 	private final String  option_name;
@@ -60,7 +60,7 @@ public enum MenuOptions {
 		return false;
 	}
 
-	public static String menu(String header,MenuOptions[] restrict){
+	public static String menu(String header, MenuOptions[] restrict){
 		StringBuilder s = new StringBuilder(header + "\n");
 		for(MenuOptions t: restrict){
 			s.append(menu_entry_string(t));

@@ -37,7 +37,7 @@ public class SystemTest {
 		Account mario_acc= new Account("193022","FIL2001",dolar);
 		Account julia_acc= new Account("194022","FIL3001",dolar);
 		Account fefe_acc= new Account("195022","FIL3001",dolar);
-
+		
 		Client mario =  new Client("Mario","Brother",born_at,mario_acc,"It's me Mario","114929993");
 		Client julia =  new Client("Julia","Ana",born_at,julia_acc,"I am not mario","114929803");
 		Client fefe =  new Client("FE","FE",born_at,fefe_acc,"I am not mario also","1110821529");
@@ -84,7 +84,7 @@ public class SystemTest {
 		UI s = new AtmUI(bank, bank.get_atm("ATM2009"));
 		UI t = new BranchUI(bank, bank.get_branch("FIL2001"));
 		s.start();
-		t.start();
+		//t.start();
 	}
 
 }

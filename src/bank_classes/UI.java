@@ -37,6 +37,8 @@ public abstract class UI {
 		this.access_branch = branch;
 		this.facade = bank;
 		this.input = new Reader();
+		logged_in = false;
+		systemOn = false;
 	}
 
 	public void display(String message){
@@ -173,13 +175,16 @@ public abstract class UI {
 	
 	char get_next_operation(MenuOptions[] restricted_to_options){
 		String input;
+		String menu;
 		char op_value;
 		
 		do {
-			String menu = MenuOptions.menu(SELECT_ONE_FROM_BELLOW_LIST, restricted_to_options);
+			menu = MenuOptions.menu(SELECT_ONE_FROM_BELLOW_LIST, 
+					restricted_to_options);
 			input = get_string(menu);
 			op_value = input.toUpperCase().charAt(0);
-		}while(! MenuOptions.validOption(op_value,restricted_to_options));
+		}while(! MenuOptions.validOption(op_value,
+					      	restricted_to_options));
 		
 		return op_value;
 	}
@@ -197,6 +202,7 @@ public abstract class UI {
 			message = transaction_history();
 		} else if(MenuOptions.LOGIN.compare(optCode)){
 			message = login();
+			logged_menu_loop();
 		} else if(MenuOptions.LOGOUT.compare(optCode)){
 			message = logout();
 		} else if(MenuOptions.NEW_ACCOUNT.compare(optCode)){
@@ -213,7 +219,8 @@ public abstract class UI {
 
 	private String exit() {
 		systemOn = false;
-		return "Exiting " + access_branch.toString();
+		return "Exiting " + access_branch.get_code() + "\n" +
+				access_branch.get_name();
 	}
 
 	protected abstract MenuOptions[] get_logged_menu_options();
