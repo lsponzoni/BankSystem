@@ -10,6 +10,7 @@ import bankexceptions.InvalidTransaction;
 import bankexceptions.NotFoundException;
 
 public abstract class UI {
+	private static final String NOME_USUARIO_DEPOSITO = "Digite o nome do usuario a receber o deposito: \n";
 	private static final String DIGITE_SUA_SENHA = "Digite sua senha: \n";
 	private static final String DIGITE_O_NOME_DE_USUARIO = "Digite o nome de usuario: \n";
 	private static final String DIGITE_A_QUANTIA_A_SER_TRANSFERIDA = "Digite a quantia a ser transferida: \n";
@@ -123,17 +124,19 @@ public abstract class UI {
 		String cashParcelId;
 		String user;
 		Client client;
-		display("Digite o nome do usuario a receber o deposito: \n");
-		user = get_string(PROMPT);
+
+		user = get_string(NOME_USUARIO_DEPOSITO);
 		try{
 			client = this.facade.get_client(user, this.access_branch.get_code());
 		}
 		catch(NotFoundException e){
 			return USER_NOT_FOUND;
 		}
-		display("Digite a quantia a ser depositada: \n");
-		ammount = get_string(PROMPT);
-		display("Digite o codigo do envelope: \n");
+
+		String value = "Digite a quantia a ser depositada: \n";
+		ammount = get_string(value);
+		String get_parcel = "Digite o codigo do envelope: \n";
+		display(get_parcel);
 		cashParcelId = get_string(PROMPT);
 		try{
 			this.facade.deposit(ammount, cashParcelId, access_branch, client.get_account());
@@ -148,16 +151,14 @@ public abstract class UI {
 		String ammount;
 		String user;
 		Client client;
-		display("Digite o nome do usuario a fazer o saque: \n");
-		user = get_string(PROMPT);
+		user = get_string("Digite o nome do usuario a fazer o saque: \n");
 		try{
 			client = this.facade.get_client(user, this.access_branch.get_code());
 		}
 		catch(NotFoundException e){
 			return USER_NOT_FOUND;
 		}
-		display("Digite a quantia a ser retirada: \n");
-		ammount = get_string(PROMPT);
+		ammount = get_string("Digite a quantia a ser retirada: \n");
 		return this.facade.withdraw(ammount, access_branch, client.get_account());
 	}
 

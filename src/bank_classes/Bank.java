@@ -18,12 +18,20 @@ public class Bank {
 	}
 
 	private Branch query_branch(String branch_code, Collection<Branch> b)  throws NotFoundException{
-		for(Branch each: branches){
-			if (each.code_match(branch_code))
-				return each;
+		Branch search_result = null;
+
+		for(Branch each: b){
+			if (each.code_match(branch_code)){
+				search_result = each;
+				break;
+			}
 		}
-		throw new NotFoundException(branch_code);
+		if (search_result == null) {
+			throw new NotFoundException(branch_code);
+		}
+		return search_result;
 	}
+	
 	public Branch get_branch(String branch_code) throws NotFoundException{
 		return query_branch(branch_code, branches);
 	}

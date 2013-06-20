@@ -1,24 +1,20 @@
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import bank_classes.Account;
+import bank_classes.AtmUI;
 import bank_classes.Bank;
 import bank_classes.Branch;
+import bank_classes.BranchUI;
 import bank_classes.Clerk;
 import bank_classes.Client;
 import bank_classes.Money;
 import bank_classes.UI;
 import bank_classes.User;
-import bankexceptions.DuplicateException;
 import bankexceptions.InvalidTransaction;
 import bankexceptions.NotFoundException;
 
@@ -77,7 +73,7 @@ public class SystemTest {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NotFoundException {
 		Bank bank = new Bank();
 		try {
 		bank = populate();
@@ -85,9 +81,10 @@ public class SystemTest {
 		catch(Exception e){
 			System.out.println("Error at load from data base.");
 		}
-		UI s = new AtmUI();
-		UI t = new BranchUI();
+		UI s = new AtmUI(bank, bank.get_atm("ATM2009"));
+		UI t = new BranchUI(bank, bank.get_branch("FIL2001"));
 		s.start();
+		t.start();
 	}
 
 }
